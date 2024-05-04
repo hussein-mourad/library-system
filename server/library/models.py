@@ -57,7 +57,7 @@ class Borrow(models.Model):
 
     @property
     def is_overdue(self):
-        return not self.returned and self.due_date < timezone.now()
+        return not self.returned and self.return_date < timezone.now()
 
 
 class Comment(models.Model):
