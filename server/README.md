@@ -4,48 +4,49 @@
 
 ### Docker (Recommended)
 
-Build the image
-
-```bash
-    docker build -t lms-server
-```
-
-Run the image
-
-```bash
-    docker run -p 8000:8000 lms-server
-```
-
 Clone the project
 
 ```bash
-  git clone https://github.com:sp24sw/sp24sw-final-project-g3.git library-system
+git clone https://github.com:sp24sw/sp24sw-final-project-g3.git library-system
 ```
 
 Go to the project directory
 
 ```bash
-  cd library-system/server
+cd library-system/server
 ```
+
+Build the image
+
+```bash
+docker build -t lms-server
+```
+
+Run the image
+
+```bash
+docker run -p 8000:8000 lms-server
+```
+
 
 ### Manual Setup
 
 Clone the project
 
 ```bash
-  git clone https://github.com:sp24sw/sp24sw-final-project-g3.git library-system
+git clone https://github.com:sp24sw/sp24sw-final-project-g3.git library-system
 ```
 
 Go to the project directory
 
 ```bash
-  cd library-system/server
+cd library-system/server
 ```
 
 Setup virtual environment
 
 ```bash
-    python -m venv venv
+python -m venv venv
 ```
 
 Install dependencies
