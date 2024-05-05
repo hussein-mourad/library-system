@@ -28,7 +28,6 @@ Run the image
 docker run -p 8000:8000 lms-server
 ```
 
-
 ### Manual Setup
 
 Clone the project
@@ -52,26 +51,26 @@ python -m venv venv
 Install dependencies
 
 ```bash
-    pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 Make database
 
 ```bash
-    python manage.py makemigrations
-    python manage.py migrate
+python manage.py makemigrations
+python manage.py migrate
 ```
 
 Start the server
 
 ```bash
-    python manage.py runserver
+python manage.py runserver
 ```
 
 Open the api dashboard in web browser
 
 ```bash
-    http://localhost:8000/api/
+http://localhost:8000/api/
 ```
 
 Or
@@ -79,5 +78,5 @@ Or
 Open the admin dashboard in web browser
 
 ```bash
-    http://localhost:8000/admin/
+http://localhost:8000/admin/
 ```
