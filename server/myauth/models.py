@@ -13,6 +13,11 @@ class User(AbstractUser):
     ]
     role = models.CharField(max_length=10, choices=ROLES, default="borrower")
 
+    def save(self, *args, **kwargs):
+        if self.is_superuser or self.is_staff:
+            self.role = "admin"
+        super().save(*args, **kwargs)
+
 
 class Profile(models.Model):
     IMAGE_FIELD = "avatar"
