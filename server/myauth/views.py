@@ -14,6 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "is_active",
             "date_joined",
+            "password",
         ]
         read_only_fields = ["id", "is_active", "date_joined"]
         extra_kwargs = {
@@ -22,6 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
             "first_name": {"required": False},
             "last_name": {"required": False},
             "email": {"required": False},
+            "password": {"write_only": True, "required": True},
         }
 
 
@@ -42,9 +44,9 @@ class UserViewSet(viewsets.ModelViewSet):
         return super().get_permissions()
 
     def perform_create(self, serializer):
-        password = User.objects.make_random_password()
         user = serializer.save()
-        user.set_password(password)
+        if user.is_superuser or user.is_staff:
+            user.role = "admin"
         user.save()
 
 
