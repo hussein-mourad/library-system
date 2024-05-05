@@ -47,6 +47,9 @@ class UserViewSet(viewsets.ModelViewSet):
         user = serializer.save()
         if user.is_superuser or user.is_staff:
             user.role = "admin"
+        if user.role == "admin":
+            user.is_staff = True
+            user.is_superuser = True
         user.save()
 
 
