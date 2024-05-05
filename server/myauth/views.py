@@ -52,6 +52,16 @@ class UserViewSet(viewsets.ModelViewSet):
             user.is_superuser = True
         user.save()
 
+    def perform_update(self, serializer):
+        user = serializer.save()
+        if user.role == "admin" or user.role == "assistant":
+            user.is_staff = True
+            user.is_superuser = True
+        else:
+            user.is_staff = False
+            user.is_superuser = False
+        user.save()
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
