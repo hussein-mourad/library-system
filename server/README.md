@@ -25,7 +25,13 @@ docker build -t lms-server
 Run the image
 
 ```bash
-docker run -p 8000:8000 lms-server
+docker run --name lms-server -p 8000:8000 lms-server
+```
+
+Create superuser
+
+```bash
+docker exec -it lms-server python manage.py createsuperuser
 ```
 
 ### Manual Setup
@@ -59,6 +65,12 @@ Make database
 ```bash
 python manage.py makemigrations
 python manage.py migrate
+```
+
+Create superuser
+
+```bash
+python manage.py createsuperuser
 ```
 
 Start the server
