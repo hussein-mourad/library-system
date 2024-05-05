@@ -67,16 +67,11 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source="user.username", read_only=True)
+
     class Meta:
         model = Profile
-        fields = [
-            "id",
-            "user",
-            "bio",
-            "address",
-            "phone_number",
-            "avatar",
-        ]
+        fields = "__all__"
         read_only_fields = ["id"]
         extra_kwargs = {
             "user": {"required": False},
