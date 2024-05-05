@@ -31,6 +31,9 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_fields = ["role", "is_active", "date_joined"]
+    search_fields = ["username", "first_name", "last_name", "email"]
+    ordering_fields = ["username", "first_name", "last_name", "email", "date_joined"]
 
     def get_queryset(self):
         if self.request.user.role == "admin":
@@ -88,6 +91,9 @@ class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_fields = ["user", "bio", "address", "phone_number"]
+    search_fields = ["bio", "address", "phone_number"]
+    odering_fields = ["bio", "address", "phone_number"]
 
     def get_queryset(self):
         if self.request.user.role == "admin":
