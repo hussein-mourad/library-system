@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.timezone import timezone
 from library.utils import generate_filename
+from myauth.models import User
 
 
 class Author(models.Model):
