@@ -50,14 +50,14 @@ class UserViewSet(viewsets.ModelViewSet):
         user = serializer.save()
         if user.is_superuser or user.is_staff:
             user.role = "admin"
-        if user.role == "admin":
+        if user.role != "borrower":
             user.is_staff = True
             user.is_superuser = True
         user.save()
 
     def perform_update(self, serializer):
         user = serializer.save()
-        if user.role == "admin" or user.role == "assistant":
+        if user.role != "borrower":
             user.is_staff = True
             user.is_superuser = True
         else:
