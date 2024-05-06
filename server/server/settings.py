@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework",
     "library",
+    "django_cleanup",
 ]
 
 MIDDLEWARE = [

@@ -58,8 +58,8 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    ordering_fields = "__all__"
     filterset_fields = ["title", "author", "category"]
-    ordering_fields = ["title", "author", "category", "publication_date"]
     search_fields = ["$title", "author__name", "category__name"]
 
     def perform_update(self, serializer):
