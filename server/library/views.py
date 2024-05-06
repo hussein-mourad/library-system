@@ -2,6 +2,8 @@ from django.utils.version import os
 from library.models import Author, Book, Borrow, Category, Comment
 from rest_framework import serializers, viewsets
 
+from server.mixins import BulkActionsMixin
+
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,7 +41,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class AuthorViewSet(viewsets.ModelViewSet):
+class AuthorViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     filterset_fields = ["name"]
@@ -47,7 +49,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
     search_fields = ["$name"]
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
+class CategoryViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     filterset_fields = ["name"]
@@ -55,7 +57,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     search_fields = ["$name"]
 
 
-class BookViewSet(viewsets.ModelViewSet):
+class BookViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     ordering_fields = "__all__"
@@ -77,7 +79,7 @@ class BookViewSet(viewsets.ModelViewSet):
                 os.remove(old_image.path)
 
 
-class BorrowViewSet(viewsets.ModelViewSet):
+class BorrowViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     queryset = Borrow.objects.all()
     serializer_class = BorrowSerializer
     filterset_fields = ["book", "user"]
@@ -85,7 +87,7 @@ class BorrowViewSet(viewsets.ModelViewSet):
     search_fields = ["$book__title", "user__username"]
 
 
-class CommentViewSet(viewsets.ModelViewSet):
+class CommentViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     filterset_fields = ["book", "user"]

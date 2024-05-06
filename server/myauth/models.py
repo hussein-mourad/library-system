@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from PIL import Image
@@ -34,6 +36,10 @@ class Profile(models.Model):
         super().save(*args, **kwargs)
         # resize the image
         if not self.avatar:
+            return
+        if not self.avatar.path:
+            return
+        if not os.path.isfile(self.avatar.path):
             return
         img = Image.open(self.avatar.path)
         if img.height > 150 or img.width > 150:
