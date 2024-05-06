@@ -1,7 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from library.utils import generate_filename
 from PIL import Image
+
+from server.utils import generate_filename
 
 
 class User(AbstractUser):
