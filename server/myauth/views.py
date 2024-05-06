@@ -1,3 +1,5 @@
+from logging import log
+
 from myauth.models import Profile, User
 from myauth.serializers import ProfileSerializer, UserSerializer
 from rest_framework import permissions, viewsets
@@ -44,7 +46,7 @@ class UserViewSet(viewsets.ModelViewSet):
         user.save()
 
 
-class ProfileViewSet(ImageCleanupMixin, viewsets.ModelViewSet):
+class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
