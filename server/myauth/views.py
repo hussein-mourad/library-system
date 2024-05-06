@@ -2,6 +2,7 @@ from myauth.models import Profile, User
 from myauth.serializers import ProfileSerializer, UserSerializer
 from rest_framework import permissions, viewsets
 
+from server.mixins import ImageCleanupMixin
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -43,7 +44,7 @@ class UserViewSet(viewsets.ModelViewSet):
         user.save()
 
 
-class ProfileViewSet(viewsets.ModelViewSet):
+class ProfileViewSet(ImageCleanupMixin, viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
