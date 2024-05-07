@@ -12,9 +12,9 @@ class User(AbstractUser):
         ("admin", "Admin"),
         ("librarian", "Librarian"),
         ("assistant", "Assistant"),
-        ("borrower", "Borrower"),
+        ("member", "Member"),
     ]
-    role = models.CharField(max_length=10, choices=ROLES, default="borrower")
+    role = models.CharField(max_length=10, choices=ROLES, default="member")
 
     class Meta:
         ordering = ["id"]

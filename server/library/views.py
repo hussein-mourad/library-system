@@ -53,6 +53,31 @@ class BorrowViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     ordering_fields = ["book", "user", "borrow_date", "return_date"]
     search_fields = ["$book__title", "user__username"]
 
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        instance.book.status = "borrowed"
+        instance.book.save()
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        if instance.returned:
+            instance.book.status = "available"
+            instance.book.save()
+        else:
+            instance.book.status = "borrowed"
+            instance.book.save()
+
+    def perform_destroy(self, instance):
+        instance.book.status = "available"
+        instance.book.save()
+        instance.delete()
+
+    def perform_bulk_destroy(self, queryset):
+        for instance in queryset:
+            instance.book.status = "available"
+            instance.book.save()
+        queryset.delete()
+
 
 class CommentViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     queryset = Comment.objects.all()
