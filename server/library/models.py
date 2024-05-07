@@ -10,6 +10,9 @@ class Author(models.Model):
     name = models.CharField(max_length=100)
     bio = models.TextField(blank=True)
 
+    class Meta:
+        ordering = ["id"]
+
     def __str__(self):
         return self.name
 
@@ -18,6 +21,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = "category"
         verbose_name_plural = "categories"
+        ordering = ["id"]
 
     name = models.CharField(max_length=100)
 
@@ -32,6 +36,9 @@ class Book(models.Model):
     ]
     IMAGE_FIELD = "cover_image"
 
+    class Meta:
+        ordering = ["id"]
+
     title = models.CharField(max_length=255)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
@@ -41,7 +48,7 @@ class Book(models.Model):
         blank=True,
         null=True,
     )
-    publication_date = models.DateField()
+    publication_date = models.DateField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     status = models.CharField(
         max_length=10, choices=STATUS_CHOICES, default="available"
@@ -58,6 +65,9 @@ class Borrow(models.Model):
     return_date = models.DateTimeField(null=True, blank=True)
     returned = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ["id"]
+
     def __str__(self):
         return f"{self.user.username} - {self.book.title}"
 
@@ -71,6 +81,9 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["id"]
 
     def __str__(self):
         return f"{self.user.username} - {self.book.title}"
