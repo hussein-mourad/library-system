@@ -1,3 +1,4 @@
+import "./App.css";
 import {
   Admin,
   EditGuesser,
@@ -5,17 +6,22 @@ import {
   Resource,
   ShowGuesser,
 } from "react-admin";
-import { dataProvider } from "@/providers/data-provider";
+import UserIcon from "@mui/icons-material/Group";
+import CommentIcon from '@mui/icons-material/Comment';
+import AttributionIcon from '@mui/icons-material/Attribution';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import CategoryIcon from '@mui/icons-material/Category';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import BookOnlineIcon from '@mui/icons-material/BookOnline';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import {
   BookEdit,
   BookList,
   BookCreate,
   BookShow,
 } from "@/components/admin/books";
-import "./App.css";
+import { dataProvider } from "@/providers/data-provider";
 // import { CommentList } from "@/components/admin/comments"
-import UserIcon from "@mui/icons-material/Group";
-import PostIcon from "@mui/icons-material/Book";
 
 function App() {
   return (
@@ -32,6 +38,7 @@ function App() {
         list={ListGuesser}
         show={ShowGuesser}
         edit={EditGuesser}
+        icon={AccountBoxIcon}
       />
       <Resource
         name="authors"
@@ -39,6 +46,7 @@ function App() {
         show={ShowGuesser}
         edit={EditGuesser}
         recordRepresentation="name"
+        icon={DriveFileRenameOutlineIcon}
       />
       <Resource
         name="categories"
@@ -46,6 +54,7 @@ function App() {
         show={ShowGuesser}
         edit={EditGuesser}
         recordRepresentation="name"
+        icon={CategoryIcon}
       />
       <Resource
         name="books"
@@ -53,19 +62,21 @@ function App() {
         show={BookShow}
         edit={BookEdit}
         create={BookCreate}
-        icon={PostIcon}
+        icon={LibraryBooksIcon}
       />
       <Resource
         name="borrows"
         list={ListGuesser}
         show={ShowGuesser}
         edit={EditGuesser}
+        icon={BookOnlineIcon}
       />
       <Resource
         name="comments"
         list={ListGuesser}
         show={ShowGuesser}
         edit={EditGuesser}
+        icon={CommentIcon}
       />
     </Admin>
   );
