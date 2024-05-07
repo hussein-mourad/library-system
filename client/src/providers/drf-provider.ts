@@ -1,5 +1,24 @@
 import { stringify } from "query-string";
-import { Identifier, fetchUtils, DataProvider } from "react-admin";
+import { Identifier, fetchUtils, DataProvider, CreateParams, UpdateParams } from "react-admin";
+
+const createFormData = (params) => {
+  const formData = new FormData();
+  for (const key in params.data) {
+    const value = params.data[key] || "";
+    if (value && value.rawFile) {
+      formData.append(key, value.rawFile);
+    } else if (typeof value === 'object') {
+      // Recursively check nested objects
+      const nestedFormData = createFormData({ data: value });
+      for (const [nestedKey, nestedValue] of nestedFormData.entries()) {
+        formData.append(`${key}.${nestedKey}`, nestedValue);
+      }
+    } else {
+      formData.append(key, value);
+    }
+  }
+  return formData;
+};
 
 const getPaginationQuery = (pagination) => {
   return {
@@ -8,8 +27,8 @@ const getPaginationQuery = (pagination) => {
   };
 };
 
-const getFilterQuery = (filter: Filter) => {
-  const { q: search, ...otherSearchParams } = filter;
+const getFilterQuery = (filter) => {
+  const { search, ...otherSearchParams } = filter;
   return {
     ...otherSearchParams,
     search,
@@ -80,8 +99,9 @@ export default (
 
     update: async (resource, params) => {
       const { json } = await httpClient(`${apiUrl}/${resource}/${params.id}/`, {
-        method: "PUT",
-        body: JSON.stringify(params.data),
+        method: "PATCH",
+        body: createFormData(params),
+        // body: JSON.stringify(params.data),
       });
       return { data: json };
     },
@@ -90,8 +110,9 @@ export default (
       Promise.all(
         params.ids.map((id) =>
           httpClient(`${apiUrl}/${resource}/${id}/`, {
-            method: "PUT",
-            body: JSON.stringify(params.data),
+            method: "PATCH",
+            body: createFormData(params),
+            // body: JSON.stringify(params.data),
           }),
         ),
       ).then((responses) => ({ data: responses.map(({ json }) => json.id) })),
@@ -99,7 +120,8 @@ export default (
     create: async (resource, params) => {
       const { json } = await httpClient(`${apiUrl}/${resource}/`, {
         method: "POST",
-        body: JSON.stringify(params.data),
+        body: createFormData(params),
+        // body: JSON.stringify(params.data),
       });
       return {
         data: { ...json },
