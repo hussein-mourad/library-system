@@ -9,7 +9,7 @@ import {
 const getPaginationQuery = (pagination) => {
   return {
     page: pagination.page,
-    page_size: pagination.perPage,
+    perPage: pagination.perPage,
   };
 };
 
@@ -85,7 +85,7 @@ export default (
 
     update: async (resource, params) => {
       const { json } = await httpClient(`${apiUrl}/${resource}/${params.id}/`, {
-        method: 'PATCH',
+        method: 'PUT',
         body: JSON.stringify(params.data),
       });
       return { data: json };
@@ -95,7 +95,7 @@ export default (
       Promise.all(
         params.ids.map(id =>
           httpClient(`${apiUrl}/${resource}/${id}/`, {
-            method: 'PATCH',
+            method: 'PUT',
             body: JSON.stringify(params.data),
           })
         )

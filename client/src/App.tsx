@@ -26,6 +26,12 @@ import {
 //
 import drfProvider from "@/providers/drf-provider";
 import jwtTokenAuthProvider, { fetchJsonWithAuthJWTToken } from "@/providers/auth-provider";
+import { UserCreate, UserEdit, UserList, UserShow } from "@/components/admin/users";
+import { ProfileCreate, ProfileEdit, ProfileList, ProfileShow } from "@/components/admin/profiles";
+import { AuthorCreate, AuthorEdit, AuthorList, AuthorShow } from "./components/admin/authors";
+import { CategoryCreate, CategoryEdit, CategoryList, CategoryShow } from "./components/admin/categories";
+import { BorrowCreate, BorrowEdit, BorrowList, BorrowShow } from "./components/admin/borrows";
+import { CommentCreate, CommentEdit, CommentList, CommentShow } from "./components/admin/comments";
 
 const apiUrl = import.meta.env.VITE_API_URL as string;
 const authProvider = jwtTokenAuthProvider({ obtainAuthTokenUrl: `${apiUrl}/token/`, refreshTokenUrl: `${apiUrl}/token/refresh/` })
@@ -36,31 +42,36 @@ function App() {
     <Admin authProvider={authProvider} dataProvider={dataProvider} requireAuth>
       <Resource
         name="users"
-        list={ListGuesser}
-        show={ShowGuesser}
-        edit={EditGuesser}
+        list={UserList}
+        show={UserShow}
+        edit={UserEdit}
+        create={UserCreate}
+        recordRepresentation="username"
         icon={UserIcon}
       />
       <Resource
         name="profiles"
-        list={ListGuesser}
-        show={ShowGuesser}
-        edit={EditGuesser}
+        list={ProfileList}
+        show={ProfileShow}
+        edit={ProfileEdit}
+        create={ProfileCreate}
         icon={AccountBoxIcon}
       />
       <Resource
         name="authors"
-        list={ListGuesser}
-        show={ShowGuesser}
-        edit={EditGuesser}
+        list={AuthorList}
+        show={AuthorShow}
+        edit={AuthorEdit}
+        create={AuthorCreate}
         recordRepresentation="name"
         icon={DriveFileRenameOutlineIcon}
       />
       <Resource
         name="categories"
-        list={ListGuesser}
-        show={ShowGuesser}
-        edit={EditGuesser}
+        list={CategoryList}
+        show={CategoryShow}
+        edit={CategoryEdit}
+        create={CategoryCreate}
         recordRepresentation="name"
         icon={CategoryIcon}
       />
@@ -70,20 +81,23 @@ function App() {
         show={BookShow}
         edit={BookEdit}
         create={BookCreate}
+        recordRepresentation="title"
         icon={LibraryBooksIcon}
       />
       <Resource
         name="borrows"
-        list={ListGuesser}
-        show={ShowGuesser}
-        edit={EditGuesser}
+        list={BorrowList}
+        show={BorrowShow}
+        edit={BorrowEdit}
+        create={BorrowCreate}
         icon={BookOnlineIcon}
       />
       <Resource
         name="comments"
-        list={ListGuesser}
-        show={ShowGuesser}
-        edit={EditGuesser}
+        list={CommentList}
+        show={CommentShow}
+        edit={CommentEdit}
+        create={CommentCreate}
         icon={CommentIcon}
       />
     </Admin>
