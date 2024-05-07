@@ -21,13 +21,12 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Change to directory
-      run: |
-        cd server/
     - name: Install Dependencies
       run: |
+        cd server/
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
       run: |
+        cd server/
         python manage.py test
