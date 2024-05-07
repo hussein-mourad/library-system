@@ -6,18 +6,20 @@ import {
   DateInput,
   Edit,
   EditButton,
+  ImageField,
+  ImageInput,
   Labeled,
   List,
   ReferenceField,
   ReferenceInput,
   SelectField,
+  SelectInput,
   Show,
   SimpleForm,
   SimpleList,
   SimpleShowLayout,
   TextField,
   TextInput,
-  UrlField,
   useRecordContext,
 } from "react-admin";
 
@@ -66,14 +68,14 @@ export const BookShow = () => (
   <Show title={<BookTitle />}>
     <SimpleShowLayout>
       <TextField source="id" />
-      <ReferenceField source="author" reference="authors" link="show" />
-      <ReferenceField source="category" reference="categories" link="show" />
+      <ImageField source="cover_image" />
       <TextField source="title" />
+      <ReferenceField source="author" reference="authors" link="show" />
       <TextField source="description" />
+      <ReferenceField source="category" reference="categories" link="show" />
       <TextField source="isbn" />
-      <TextField source="cover_image" />
-      <DateField source="publication_date" />
       <TextField source="status" />
+      <DateField source="publication_date" />
     </SimpleShowLayout>
   </Show>
 );
@@ -81,20 +83,28 @@ export const BookShow = () => (
 export const BookEdit = () => (
   <Edit title={<BookTitle />}>
     <SimpleForm>
-      <TextInput source="id" InputProps={{ disabled: true }} />
-      <TextInput source="title" />
-      <TextInput source="description" multiline rows={5} />
-      <TextInput source="isbn" />
-      <TextInput source="cover_image" />
-      {/* <SelectField source="author" reference="authors" /> */}
-      <DateInput source="publication_date" />
-      {/* <TextInput source="status" /> */}
-      <SelectField source="status" choices={["available", "borrowed"]} />
+      <TextInput className="sm:w-96" source="id" InputProps={{ disabled: true }} />
+      <ImageField source="cover_image" />
+      <ImageInput className="sm:w-96" source="cover_image">
+        <ImageField source="src" title="title" />
+      </ImageInput>
+      <TextInput className="sm:w-96" source="title" />
+      <TextInput className="sm:w-96" source="description" multiline rows={5} />
+      <TextInput className="sm:w-96" source="isbn" />
+      <TextInput className="sm:w-96" source="cover_image" />
+      <SelectInput className="sm:w-96" source="status" choices={[
+        { id: "available", name: "available" },
+        { id: "borrowed", name: "borrowed" },
+      ]} />
+      {/* <SelectField className="sm:w-96" source="author" reference="authors" /> */}
+      <DateInput className="sm:w-96" source="publication_date" />
+      {/* <TextInput className="sm:w-96" source="status" /> */}
+      <SelectField className="sm:w-96" source="status" choices={["available", "borrowed"]} />
       <Labeled label="Author">
-        <ReferenceField source="author" reference="authors" link="edit" />
+        <ReferenceField className="sm:w-96" source="author" reference="authors" link="edit" />
       </Labeled>
       <Labeled label="Category">
-        <ReferenceField source="category" reference="categories" link="edit" />
+        <ReferenceField className="sm:w-96" source="category" reference="categories" link="edit" />
       </Labeled>
     </SimpleForm>
   </Edit>
@@ -103,15 +113,23 @@ export const BookEdit = () => (
 export const BookCreate = () => (
   <Create>
     <SimpleForm>
-      {/* <TextInput source="id" InputProps={{ disabled: true }} /> */}
-      <TextInput source="author" />
-      <TextInput source="category" />
-      <TextInput source="title" />
-      <TextInput source="description" multiline rows={5} />
-      <TextInput source="isbn" />
-      <TextInput source="cover_image" />
-      {/* <DateInput source="publication_date" /> */}
-      {/* <TextInput source="status" /> */}
+      <TextInput className="sm:w-96" source="title" />
+      <TextInput className="sm:w-96" source="description" multiline rows={5} />
+      <ReferenceField className="sm:w-96" source="author" reference="authors" />
+      <ReferenceInput className="sm:w-96" source="author" reference="authors">
+        <SelectInput className="sm:w-96" source="author" />
+      </ReferenceInput>
+      <ReferenceInput className="sm:w-96" source="category" reference="categories">
+        <SelectInput className="sm:w-96" source="category" />
+      </ReferenceInput>
+      <TextInput className="sm:w-96" source="isbn" />
+      <DateInput className="sm:w-96" source="publication_date" />
+      <ImageInput className="sm:w-96" source="cover_image">
+        <ImageField source="src" title="title" />
+      </ImageInput>
+
+      {/* <TextInput className="sm:w-96" source="status" /> */}
+      {/* <SelectField className="sm:w-96" source="status" choices={["available", "borrowed"]} /> */}
     </SimpleForm>
   </Create>
 );

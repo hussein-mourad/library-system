@@ -8,7 +8,6 @@ import {
 } from "react-admin";
 import UserIcon from "@mui/icons-material/Group";
 import CommentIcon from '@mui/icons-material/Comment';
-import AttributionIcon from '@mui/icons-material/Attribution';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CategoryIcon from '@mui/icons-material/Category';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
@@ -20,12 +19,21 @@ import {
   BookCreate,
   BookShow,
 } from "@/components/admin/books";
-import { dataProvider } from "@/providers/data-provider";
+// import dataProvider from "@/providers/data-provider";
+// import authProvider from "@/providers/auth-provider";
 // import { CommentList } from "@/components/admin/comments"
+// console.log(authProvider);
+//
+import drfProvider from "@/providers/drf-provider";
+import jwtTokenAuthProvider, { fetchJsonWithAuthJWTToken } from "@/providers/auth-provider";
+
+const apiUrl = import.meta.env.VITE_API_URL as string;
+const authProvider = jwtTokenAuthProvider({ obtainAuthTokenUrl: `${apiUrl}/token/`, refreshTokenUrl: `${apiUrl}/token/refresh/` })
+const dataProvider = drfProvider(apiUrl, fetchJsonWithAuthJWTToken);
 
 function App() {
   return (
-    <Admin dataProvider={dataProvider}>
+    <Admin authProvider={authProvider} dataProvider={dataProvider} requireAuth>
       <Resource
         name="users"
         list={ListGuesser}
