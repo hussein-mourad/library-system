@@ -34,7 +34,7 @@ class UserViewSet(BulkActionsMixin, viewsets.ModelViewSet):
             # If the role is not specified, allow any user to create a new user
             if not role:
                 return [permissions.AllowAny()]
-            # A regular user can only create a borrower
+            # A regular user can only create a member
             if role in ["admin", "librarian", "assistant"]:
                 return [permissions.IsAdminUser()]
             return [permissions.AllowAny()]
@@ -49,14 +49,14 @@ class UserViewSet(BulkActionsMixin, viewsets.ModelViewSet):
         user = serializer.save()
         if user.is_superuser or user.is_staff:
             user.role = "admin"
-        if user.role != "borrower":
+        if user.role != "member":
             user.is_staff = True
             user.is_superuser = True
         user.save()
 
     def perform_update(self, serializer):
         user = serializer.save()
-        if user.role != "borrower":
+        if user.role != "member":
             user.is_staff = True
             user.is_superuser = True
         else:

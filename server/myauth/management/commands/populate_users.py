@@ -26,10 +26,10 @@ users_data = [
         "role": "assistant",
     },
     {
-        "username": "borrower",
-        "email": "borrower@test.com",
-        "password": "borrower",
-        "role": "borrower",
+        "username": "member",
+        "email": "member@test.com",
+        "password": "member",
+        "role": "member",
     },
 ]
 
