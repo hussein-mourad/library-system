@@ -1,11 +1,7 @@
+/* @tailwind base; */
+/* @tailwind components; */
+/* @tailwind utilities; */
+
 body {
   margin: 0;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.mb-5 {
-  margin-bottom: 5px;
 }
