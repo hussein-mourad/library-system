@@ -43,36 +43,31 @@ export const ProfileList = () => {
       {isSmall ? (
         <SimpleList
           primaryText={(record) => record.username}
-          secondaryText={(record) => record.phone_number}
-          tertiaryText={(record) => record.address}
+          secondaryText={(record) => record.address}
+          tertiaryText={(record) => record.phone_number}
         />
       ) : (
         <Datagrid rowClick="show">
           <TextField source="id" />
           <TextField source="username" />
-          <DateField source="bio" />
-          <DateField source="address" />
-          <DateField source="phone_number" />
-          <TextField source="avatar" />
-          <NumberField source="user" />
+          <TextField source="bio" />
+          <TextField source="phone_number" />
+          <TextField source="address" />
         </Datagrid>
       )}
     </List>
   );
 };
 
-
-
 export const ProfileShow = () => (
   <Show title={<ProfileTitle />}>
     <SimpleShowLayout>
       <TextField source="id" />
+      <ImageField source="avatar" />
       <TextField source="username" />
-      <DateField source="bio" />
-      <DateField source="address" />
-      <DateField source="phone_number" />
-      <TextField source="avatar" />
-      <NumberField source="user" />
+      <TextField source="bio" />
+      <TextField source="phone_number" />
+      <TextField source="address" />
     </SimpleShowLayout>
   </Show>
 );
@@ -80,13 +75,17 @@ export const ProfileShow = () => (
 export const ProfileEdit = () => (
   <Edit title={<ProfileTitle />}>
     <SimpleForm>
-      <TextInput source="id" />
-      <TextInput source="username" />
-      <DateInput source="bio" />
-      <DateInput source="address" />
-      <DateInput source="phone_number" />
-      <TextInput source="avatar" />
-      <NumberInput source="user" />
+      <ImageField className="sm:w-96" source="avatar" />
+      <TextInput
+        className="sm:w-96"
+        source="id"
+        InputProps={{ disabled: true }}
+      />
+      <ReferenceInput className="sm:w-96" source="user" reference="users" />
+      <TextInput className="sm:w-96" source="username" />
+      <TextInput className="sm:w-96" source="bio" multiline rows={5} />
+      <TextInput className="sm:w-96" source="address" />
+      <NumberInput className="sm:w-96" source="phone_number" />
     </SimpleForm>
   </Edit>
 );
@@ -94,14 +93,13 @@ export const ProfileEdit = () => (
 export const ProfileCreate = () => (
   <Create>
     <SimpleForm>
-      <TextInput source="id" />
-      <TextInput source="username" />
-      <DateInput source="bio" />
-      <DateInput source="address" />
-      <DateInput source="phone_number" />
-      <TextInput source="avatar" />
-      <NumberInput source="user" />
+      <ImageInput className="sm:w-96" source="avatar">
+        <ImageField source="src" title="title" />
+      </ImageInput>
+      <TextInput className="sm:w-96" source="username" />
+      <TextInput className="sm:w-96" source="bio" />
+      <NumberInput className="sm:w-96" source="phone_number" />
+      <TextInput className="sm:w-96" source="address" />
     </SimpleForm>
-
   </Create>
 );

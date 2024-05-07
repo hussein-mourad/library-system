@@ -83,7 +83,11 @@ export const BookShow = () => (
 export const BookEdit = () => (
   <Edit title={<BookTitle />}>
     <SimpleForm>
-      <TextInput className="sm:w-96" source="id" InputProps={{ disabled: true }} />
+      <TextInput
+        className="sm:w-96"
+        source="id"
+        InputProps={{ disabled: true }}
+      />
       <ImageField source="cover_image" />
       <ImageInput className="sm:w-96" source="cover_image">
         <ImageField source="src" title="title" />
@@ -91,20 +95,30 @@ export const BookEdit = () => (
       <TextInput className="sm:w-96" source="title" />
       <TextInput className="sm:w-96" source="description" multiline rows={5} />
       <TextInput className="sm:w-96" source="isbn" />
-      <TextInput className="sm:w-96" source="cover_image" />
-      <SelectInput className="sm:w-96" source="status" choices={[
-        { id: "available", name: "available" },
-        { id: "borrowed", name: "borrowed" },
-      ]} />
-      {/* <SelectField className="sm:w-96" source="author" reference="authors" /> */}
+      <SelectInput
+        className="sm:w-96"
+        source="status"
+        choices={[
+          { id: "available", name: "Available" },
+          { id: "borrowed", name: "Borrowed" },
+        ]}
+      />
       <DateInput className="sm:w-96" source="publication_date" />
-      {/* <TextInput className="sm:w-96" source="status" /> */}
-      <SelectField className="sm:w-96" source="status" choices={["available", "borrowed"]} />
       <Labeled label="Author">
-        <ReferenceField className="sm:w-96" source="author" reference="authors" link="edit" />
+        <ReferenceField
+          className="sm:w-96"
+          source="author"
+          reference="authors"
+          link="edit"
+        />
       </Labeled>
       <Labeled label="Category">
-        <ReferenceField className="sm:w-96" source="category" reference="categories" link="edit" />
+        <ReferenceField
+          className="sm:w-96"
+          source="category"
+          reference="categories"
+          link="edit"
+        />
       </Labeled>
     </SimpleForm>
   </Edit>
@@ -119,7 +133,11 @@ export const BookCreate = () => (
       <ReferenceInput className="sm:w-96" source="author" reference="authors">
         <SelectInput className="sm:w-96" source="author" />
       </ReferenceInput>
-      <ReferenceInput className="sm:w-96" source="category" reference="categories">
+      <ReferenceInput
+        className="sm:w-96"
+        source="category"
+        reference="categories"
+      >
         <SelectInput className="sm:w-96" source="category" />
       </ReferenceInput>
       <TextInput className="sm:w-96" source="isbn" />

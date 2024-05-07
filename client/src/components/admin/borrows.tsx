@@ -1,4 +1,3 @@
-
 import { useMediaQuery, Theme } from "@mui/material";
 import {
   BooleanField,
@@ -27,9 +26,7 @@ import {
   useRecordContext,
 } from "react-admin";
 
-const borrowsFilters = [
-  <TextInput source="search" label="Search" alwaysOn />,
-];
+const borrowsFilters = [<TextInput source="search" label="Search" alwaysOn />];
 
 const BorrowTitle = () => {
   const record = useRecordContext();
@@ -50,11 +47,7 @@ export const BorrowList = () => {
         <Datagrid rowClick="show">
           <TextField source="id" />
           <ReferenceField source="user" reference="users" link="show" />
-          <ReferenceField
-            source="book"
-            reference="books"
-            link="show"
-          />
+          <ReferenceField source="book" reference="books" link="show" />
           <DateField source="borrow_date" />
           <DateField source="return_date" />
           <BooleanField source="returned" />
@@ -70,11 +63,7 @@ export const BorrowShow = () => (
     <SimpleShowLayout>
       <TextField source="id" />
       <ReferenceField source="user" reference="users" link="show" />
-      <ReferenceField
-        source="book"
-        reference="books"
-        link="show"
-      />
+      <ReferenceField source="book" reference="books" link="show" />
       <DateField source="borrow_date" />
       <DateField source="return_date" />
       <BooleanField source="returned" />
@@ -85,7 +74,11 @@ export const BorrowShow = () => (
 export const BorrowEdit = () => (
   <Edit title={<BorrowTitle />}>
     <SimpleForm>
-      <TextInput className="sm:w-96" source="id" InputProps={{ disabled: true }} />
+      <TextInput
+        className="sm:w-96"
+        source="id"
+        InputProps={{ disabled: true }}
+      />
       <ReferenceInput className="sm:w-96" source="book" reference="books">
         <SelectInput className="sm:w-96" source="book" />
       </ReferenceInput>
@@ -110,7 +103,6 @@ export const BorrowCreate = () => (
       </ReferenceInput>
       <DateInput className="sm:w-96" source="borrow_date" />
       <DateInput className="sm:w-96" source="return_date" />
-      <BooleanInput className="sm:w-96" source="returned" />
     </SimpleForm>
   </Create>
 );

@@ -27,9 +27,7 @@ import {
   useRecordContext,
 } from "react-admin";
 
-const usersFilters = [
-  <TextInput source="search" label="Search" alwaysOn />
-];
+const usersFilters = [<TextInput source="search" label="Search" alwaysOn />];
 
 const UserTitle = () => {
   const record = useRecordContext();
@@ -59,7 +57,7 @@ export const UserList = () => {
         </Datagrid>
       )}
     </List>
-  )
+  );
 };
 
 export const UserShow = () => (
@@ -77,25 +75,46 @@ export const UserShow = () => (
   </Show>
 );
 
-export const UserEdit = () => (
-  <Edit title={<UserTitle />}>
-    <SimpleForm>
-      <TextInput className="sm:w-96" source="id" InputProps={{ disabled: true }} />
-      <TextInput className="sm:w-96" source="username" />
-      <SelectInput className="sm:w-96" source="role" choices={[
-        { id: "admin", name: "Admin" },
-        { id: "librarian", name: "Librarian" },
-        { id: "assistant", name: "Assistant" },
-        { id: "member", name: "Member" },
-      ]} />
-      <TextInput className="sm:w-96" source="first_name" />
-      <TextInput className="sm:w-96" source="last_name" />
-      <TextInput className="sm:w-96" source="email" />
-      <BooleanInput className="sm:w-96" source="is_active" />
-      <DateInput className="sm:w-96" source="date_joined" />
-    </SimpleForm>
-  </Edit>
-);
+export const UserEdit = (props) => {
+  const transform = (data) => {
+    // Filter out the unchanged email field
+    // console.log("transform", data, props.record.email)
+    if (data?.email && data.email === props.record.email) {
+      const { email, ...rest } = data;
+      return rest;
+    }
+    delete data.email;
+    console.log("transform", data);
+    return data;
+  };
+  return (
+    <Edit title={<UserTitle />} {...props} transform={transform}>
+      <SimpleForm>
+        <TextInput
+          className="sm:w-96"
+          source="id"
+          InputProps={{ disabled: true }}
+        />
+        <TextInput className="sm:w-96" source="username" />
+        <SelectInput
+          className="sm:w-96"
+          source="role"
+          choices={[
+            { id: "admin", name: "Admin" },
+            { id: "librarian", name: "Librarian" },
+            { id: "assistant", name: "Assistant" },
+            { id: "member", name: "Member" },
+          ]}
+        />
+        <TextInput className="sm:w-96" source="first_name" />
+        <TextInput className="sm:w-96" source="last_name" />
+        <TextInput className="sm:w-96" source="email" />
+        <PasswordInput className="sm:w-96" source="password" />
+        <BooleanInput className="sm:w-96" source="is_active" />
+      </SimpleForm>
+    </Edit>
+  );
+};
 
 export const UserCreate = () => (
   <Create>
@@ -105,12 +124,16 @@ export const UserCreate = () => (
       <TextInput className="sm:w-96" source="username" />
       <TextInput className="sm:w-96" source="email" />
       <PasswordInput className="sm:w-96" source="password" />
-      <SelectInput className="sm:w-96" source="role" choices={[
-        { id: "admin", name: "Admin" },
-        { id: "librarian", name: "Librarian" },
-        { id: "assistant", name: "Assistant" },
-        { id: "member", name: "Member" },
-      ]} />
+      <SelectInput
+        className="sm:w-96"
+        source="role"
+        choices={[
+          { id: "admin", name: "Admin" },
+          { id: "librarian", name: "Librarian" },
+          { id: "assistant", name: "Assistant" },
+          { id: "member", name: "Member" },
+        ]}
+      />
     </SimpleForm>
   </Create>
 );

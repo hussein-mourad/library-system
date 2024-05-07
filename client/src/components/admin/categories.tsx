@@ -34,15 +34,12 @@ const CategoryTitle = () => {
   return <span>Category {record ? `"${record.name}"` : ""}</span>;
 };
 
-
 export const CategoryList = () => {
   const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
   return (
     <List filters={categoriesFilters}>
       {isSmall ? (
-        <SimpleList
-          primaryText={(record) => record.name}
-        />
+        <SimpleList primaryText={(record) => record.name} />
       ) : (
         <Datagrid rowClick="show">
           <TextField source="id" />

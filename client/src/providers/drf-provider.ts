@@ -1,10 +1,5 @@
-import { stringify } from 'query-string';
-import {
-  Identifier,
-  fetchUtils,
-  DataProvider,
-} from 'react-admin';
-
+import { stringify } from "query-string";
+import { Identifier, fetchUtils, DataProvider } from "react-admin";
 
 const getPaginationQuery = (pagination) => {
   return {
@@ -24,17 +19,17 @@ const getFilterQuery = (filter: Filter) => {
 export const getOrderingQuery = (sort) => {
   const { field, order } = sort;
   return {
-    ordering: `${order === 'ASC' ? '' : '-'}${field}`,
+    ordering: `${order === "ASC" ? "" : "-"}${field}`,
   };
 };
 
 export default (
   apiUrl: string,
-  httpClient = fetchUtils.fetchJson
+  httpClient = fetchUtils.fetchJson,
 ): DataProvider => {
   const getOneJson = (resource: string, id: Identifier) =>
     httpClient(`${apiUrl}/${resource}/${id}/`).then(
-      (response: Response) => response.json
+      (response: Response) => response.json,
     );
 
   return {
@@ -62,9 +57,9 @@ export default (
     },
 
     getMany: (resource, params) => {
-      return Promise.all(
-        params.ids.map(id => getOneJson(resource, id))
-      ).then(data => ({ data }));
+      return Promise.all(params.ids.map((id) => getOneJson(resource, id))).then(
+        (data) => ({ data }),
+      );
     },
 
     getManyReference: async (resource, params) => {
@@ -85,7 +80,7 @@ export default (
 
     update: async (resource, params) => {
       const { json } = await httpClient(`${apiUrl}/${resource}/${params.id}/`, {
-        method: 'PUT',
+        method: "PUT",
         body: JSON.stringify(params.data),
       });
       return { data: json };
@@ -93,17 +88,17 @@ export default (
 
     updateMany: (resource, params) =>
       Promise.all(
-        params.ids.map(id =>
+        params.ids.map((id) =>
           httpClient(`${apiUrl}/${resource}/${id}/`, {
-            method: 'PUT',
+            method: "PUT",
             body: JSON.stringify(params.data),
-          })
-        )
-      ).then(responses => ({ data: responses.map(({ json }) => json.id) })),
+          }),
+        ),
+      ).then((responses) => ({ data: responses.map(({ json }) => json.id) })),
 
     create: async (resource, params) => {
       const { json } = await httpClient(`${apiUrl}/${resource}/`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(params.data),
       });
       return {
@@ -113,16 +108,16 @@ export default (
 
     delete: (resource, params) =>
       httpClient(`${apiUrl}/${resource}/${params.id}/`, {
-        method: 'DELETE',
+        method: "DELETE",
       }).then(() => ({ data: params.previousData })),
 
     deleteMany: (resource, params) =>
       Promise.all(
-        params.ids.map(id =>
+        params.ids.map((id) =>
           httpClient(`${apiUrl}/${resource}/${id}/`, {
-            method: 'DELETE',
-          })
-        )
+            method: "DELETE",
+          }),
+        ),
       ).then(() => ({ data: [] })),
   };
 };

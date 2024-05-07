@@ -54,7 +54,7 @@ export const CommentList = () => {
 };
 
 export const CommentShow = () => (
-  <Show >
+  <Show>
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="content" />
@@ -68,7 +68,11 @@ export const CommentShow = () => (
 export const CommentEdit = () => (
   <Edit>
     <SimpleForm>
-      <TextInput className="sm:w-96" source="id" InputProps={{ disabled: true }} />
+      <TextInput
+        className="sm:w-96"
+        source="id"
+        InputProps={{ disabled: true }}
+      />
       <TextInput className="sm:w-96" source="content" multiline rows={5} />
     </SimpleForm>
   </Edit>

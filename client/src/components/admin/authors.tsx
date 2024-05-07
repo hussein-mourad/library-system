@@ -23,13 +23,11 @@ import {
   useRecordContext,
 } from "react-admin";
 
-const authorsFilters = [
-  <TextInput source="search" label="Search" alwaysOn />,
-];
+const authorsFilters = [<TextInput source="search" label="Search" alwaysOn />];
 
 const AuthorTitle = () => {
   const record = useRecordContext();
-  return <span>Author {record ? `"${record.title}"` : ""}</span>;
+  return <span>Author {record ? `"${record.name}"` : ""}</span>;
 };
 
 export const AuthorList = () => {
@@ -53,7 +51,6 @@ export const AuthorList = () => {
   );
 };
 
-
 export const AuthorShow = () => (
   <Show title={<AuthorTitle />}>
     <SimpleShowLayout>
@@ -64,11 +61,10 @@ export const AuthorShow = () => (
   </Show>
 );
 
-
 export const AuthorEdit = () => (
   <Edit title={<AuthorTitle />}>
     <SimpleForm>
-      <TextInput source="id" InputProps={{ disabled: True }} />
+      <TextInput source="id" InputProps={{ disabled: true }} />
       <TextInput source="name" />
       <TextInput source="bio" />
     </SimpleForm>
