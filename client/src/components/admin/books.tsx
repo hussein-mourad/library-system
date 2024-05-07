@@ -1,5 +1,6 @@
 import { useMediaQuery, Theme } from "@mui/material";
 import {
+  BooleanField,
   Create,
   Datagrid,
   DateField,
@@ -10,14 +11,17 @@ import {
   ImageInput,
   Labeled,
   List,
+  NumberField,
   ReferenceField,
   ReferenceInput,
+  ReferenceManyField,
   SelectField,
   SelectInput,
   Show,
   SimpleForm,
   SimpleList,
   SimpleShowLayout,
+  TabbedShowLayout,
   TextField,
   TextInput,
   useRecordContext,
@@ -47,8 +51,11 @@ export const BookList = () => {
       ) : (
         <Datagrid rowClick="show">
           <TextField source="id" />
-          <ReferenceField source="author" reference="authors" link="show" />
+          <ImageField source="cover_image"
+            sx={{ '& img': { maxWidth: 50, maxHeight: 50, objectFit: 'contain' } }}
+          />
           <TextField source="title" />
+          <ReferenceField source="author" reference="authors" link="show" />
           <ReferenceField
             source="category"
             reference="categories"
@@ -66,22 +73,33 @@ export const BookList = () => {
 
 export const BookShow = () => (
   <Show title={<BookTitle />}>
-    <SimpleShowLayout>
-      <TextField source="id" />
-      <ImageField source="cover_image" />
-      <TextField source="title" />
-      <ReferenceField source="author" reference="authors" link="show" />
-      <TextField source="description" />
-      <ReferenceField source="category" reference="categories" link="show" />
-      <TextField source="isbn" />
-      <TextField source="status" />
-      <DateField source="publication_date" />
-    </SimpleShowLayout>
+    <TabbedShowLayout>
+      <TabbedShowLayout.Tab label="data">
+        <TextField source="id" />
+        <ImageField source="cover_image" />
+        <TextField source="title" />
+        <ReferenceField source="author" reference="authors" link="show" />
+        <TextField source="description" />
+        <ReferenceField source="category" reference="categories" link="show" />
+        <TextField source="isbn" />
+        <TextField source="status" />
+        <DateField source="publication_date" />
+      </TabbedShowLayout.Tab>
+      <TabbedShowLayout.Tab label="comments" path="comments">
+        <ReferenceManyField reference="comments" target="book" label={false}>
+          <Datagrid>
+            <TextField source="content" />
+            <DateField source="created_at" />
+            <EditButton />
+          </Datagrid>
+        </ReferenceManyField>
+      </TabbedShowLayout.Tab>
+    </TabbedShowLayout>
   </Show>
 );
 
-export const BookEdit = () => (
-  <Edit title={<BookTitle />}>
+export const BookEdit = () => {
+  return (<Edit title={<BookTitle />} mutationMode="pessimistic">
     <SimpleForm>
       <TextInput
         className="sm:w-96"
@@ -89,7 +107,7 @@ export const BookEdit = () => (
         InputProps={{ disabled: true }}
       />
       <ImageField source="cover_image" />
-      <ImageInput className="sm:w-96" source="cover_image">
+      <ImageInput className="sm:w-96" source="cover_image" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
       <TextInput className="sm:w-96" source="title" />
@@ -104,25 +122,19 @@ export const BookEdit = () => (
         ]}
       />
       <DateInput className="sm:w-96" source="publication_date" />
-      <Labeled label="Author">
-        <ReferenceField
-          className="sm:w-96"
-          source="author"
-          reference="authors"
-          link="edit"
-        />
-      </Labeled>
-      <Labeled label="Category">
-        <ReferenceField
-          className="sm:w-96"
-          source="category"
-          reference="categories"
-          link="edit"
-        />
-      </Labeled>
+      <ReferenceInput className="sm:w-96" source="author" reference="authors">
+        <SelectInput className="sm:w-96" source="author" />
+      </ReferenceInput>
+      <ReferenceInput
+        className="sm:w-96"
+        source="category"
+        reference="categories"
+      >
+        <SelectInput className="sm:w-96" source="category" />
+      </ReferenceInput>
     </SimpleForm>
-  </Edit>
-);
+  </Edit>)
+};
 
 export const BookCreate = () => (
   <Create>
@@ -145,9 +157,6 @@ export const BookCreate = () => (
       <ImageInput className="sm:w-96" source="cover_image">
         <ImageField source="src" title="title" />
       </ImageInput>
-
-      {/* <TextInput className="sm:w-96" source="status" /> */}
-      {/* <SelectField className="sm:w-96" source="status" choices={["available", "borrowed"]} /> */}
     </SimpleForm>
   </Create>
 );

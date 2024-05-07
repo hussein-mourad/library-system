@@ -49,6 +49,9 @@ export const ProfileList = () => {
       ) : (
         <Datagrid rowClick="show">
           <TextField source="id" />
+          <ImageField source="avatar" sortable={false}
+            sx={{ '& img': { maxWidth: 35, maxHeight: 35, borderRadius: 9999, objectFit: 'contain' } }}
+          />
           <TextField source="username" />
           <TextField source="bio" />
           <TextField source="phone_number" />
@@ -73,9 +76,12 @@ export const ProfileShow = () => (
 );
 
 export const ProfileEdit = () => (
-  <Edit title={<ProfileTitle />}>
+  <Edit title={<ProfileTitle />} mutationMode="pessimistic">
     <SimpleForm>
       <ImageField className="sm:w-96" source="avatar" />
+      <ImageInput className="sm:w-96" source="avatar">
+        <ImageField source="src" title="title" />
+      </ImageInput>
       <TextInput
         className="sm:w-96"
         source="id"
