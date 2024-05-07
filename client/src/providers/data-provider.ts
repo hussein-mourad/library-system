@@ -28,7 +28,7 @@ const getPagination = (params: any) => {
   return { page, perPage };
 };
 
-export const dataProvider: DataProvider = {
+const dataProvider: DataProvider = {
   getList: (resource, params) => {
     const query = {
       ...getPagination(params),
@@ -59,7 +59,7 @@ export const dataProvider: DataProvider = {
       ...getFiltering(params),
       [params.target]: params.id,
     };
-    const url = `${apiUrl}/${resource}?${stringify(query)}`;
+    const url = `${apiUrl}/${resource}/?${stringify(query)}`;
     return httpClient(url).then(({ headers, json }) => ({
       data: json,
       total: parseInt(
@@ -86,7 +86,8 @@ export const dataProvider: DataProvider = {
   },
 
   create: (resource, params) =>
-    httpClient(`${apiUrl}/${resource}`, {
+    console.log(params.data) ||
+    httpClient(`${apiUrl}/${resource}/`, {
       method: "POST",
       body: JSON.stringify(params.data),
     }).then(({ json }) => ({
@@ -107,3 +108,4 @@ export const dataProvider: DataProvider = {
     ).then(({ json }) => ({ data: [...json] }));
   },
 };
+export default dataProvider;
