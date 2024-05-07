@@ -41,6 +41,69 @@ const authProvider = jwtTokenAuthProvider({
 });
 const dataProvider = drfProvider(apiUrl, fetchJsonWithAuthJWTToken);
 
+const resources = [
+  {
+    name: 'users',
+    list: UserList,
+    show: UserShow,
+    edit: UserEdit,
+    create: UserCreate,
+    recordRepresentation: 'username',
+    icon: UserIcon,
+  },
+  {
+    name: 'profiles',
+    list: ProfileList,
+    show: ProfileShow,
+    edit: ProfileEdit,
+    create: ProfileCreate,
+    icon: AccountBoxIcon,
+  },
+  {
+    name: 'authors',
+    list: AuthorList,
+    show: AuthorShow,
+    edit: AuthorEdit,
+    create: AuthorCreate,
+    recordRepresentation: 'name',
+    icon: DriveFileRenameOutlineIcon,
+  },
+  {
+    name: 'categories',
+    list: CategoryList,
+    show: CategoryShow,
+    edit: CategoryEdit,
+    create: CategoryCreate,
+    recordRepresentation: 'name',
+    icon: CategoryIcon,
+  },
+  {
+    name: 'books',
+    list: BookList,
+    show: BookShow,
+    edit: BookEdit,
+    create: BookCreate,
+    recordRepresentation: 'title',
+    icon: LibraryBooksIcon,
+  },
+  {
+    name: 'borrows',
+    list: BorrowList,
+    show: BorrowShow,
+    edit: BorrowEdit,
+    create: BorrowCreate,
+    icon: BookOnlineIcon,
+  },
+  {
+    name: 'comments',
+    list: CommentList,
+    show: CommentShow,
+    edit: CommentEdit,
+    create: CommentCreate,
+    icon: CommentIcon,
+  },
+];
+
 function AdminPanel() {
   return (
     <Admin
@@ -49,66 +112,9 @@ function AdminPanel() {
       dashboard={Dashboard}
       requireAuth
     >
-      <Resource
-        name="users"
-        list={UserList}
-        show={UserShow}
-        edit={UserEdit}
-        create={UserCreate}
-        recordRepresentation="username"
-        icon={UserIcon}
-      />
-      <Resource
-        name="profiles"
-        list={ProfileList}
-        show={ProfileShow}
-        edit={ProfileEdit}
-        create={ProfileCreate}
-        icon={AccountBoxIcon}
-      />
-      <Resource
-        name="authors"
-        list={AuthorList}
-        show={AuthorShow}
-        edit={AuthorEdit}
-        create={AuthorCreate}
-        recordRepresentation="name"
-        icon={DriveFileRenameOutlineIcon}
-      />
-      <Resource
-        name="categories"
-        list={CategoryList}
-        show={CategoryShow}
-        edit={CategoryEdit}
-        create={CategoryCreate}
-        recordRepresentation="name"
-        icon={CategoryIcon}
-      />
-      <Resource
-        name="books"
-        list={BookList}
-        show={BookShow}
-        edit={BookEdit}
-        create={BookCreate}
-        recordRepresentation="title"
-        icon={LibraryBooksIcon}
-      />
-      <Resource
-        name="borrows"
-        list={BorrowList}
-        show={BorrowShow}
-        edit={BorrowEdit}
-        create={BorrowCreate}
-        icon={BookOnlineIcon}
-      />
-      <Resource
-        name="comments"
-        list={CommentList}
-        show={CommentShow}
-        edit={CommentEdit}
-        create={CommentCreate}
-        icon={CommentIcon}
-      />
+      {resources.map((resource, index) => (
+        <Resource key={index} {...resource} />
+      ))}
     </Admin>
   );
 }
