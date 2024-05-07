@@ -8,7 +8,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = "__all__"
-        read_only_fields = ["id"]
+        read_only_fields = ["id", "user"]
         extra_kwargs = {
             "user": {"required": False},
             "bio": {"required": False},
@@ -41,3 +41,13 @@ class UserSerializer(serializers.ModelSerializer):
             "email": {"required": False},
             "password": {"write_only": True, "required": True},
         }
+
+    def validate_email(self, value):
+        """
+        Check that the email is unique.
+        """
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError(
+                "A user with this email address already exists."
+            )
+        return value

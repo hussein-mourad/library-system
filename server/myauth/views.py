@@ -1,12 +1,9 @@
-from django.db import transaction
 from myauth.models import Profile, User
 from myauth.serializers import ProfileSerializer, UserSerializer
 from rest_framework import permissions, viewsets
-from rest_framework.decorators import action
-from rest_framework.mixins import Response
-from rest_framework.views import Request
 
 from server.mixins import BulkActionsMixin
+from server.permissions import IsOwnerOrAdmin
 
 
 class UserViewSet(BulkActionsMixin, viewsets.ModelViewSet):
@@ -33,6 +30,18 @@ class UserViewSet(BulkActionsMixin, viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action == "create":
+            role = self.request.data.get("role", None)
+            # If the role is not specified, allow any user to create a new user
+            if not role:
+                return [permissions.AllowAny()]
+            # A regular user can only create a borrower
+            if role in ["admin", "librarian", "assistant"]:
+                return [permissions.IsAdminUser()]
+            return [permissions.AllowAny()]
+
+        if self.action == "create":
+            if self.request.user.role == "admin":
+                return [permissions.AllowAny()]
             return [permissions.AllowAny()]
         return super().get_permissions()
 
@@ -59,7 +68,7 @@ class UserViewSet(BulkActionsMixin, viewsets.ModelViewSet):
 class ProfileViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrAdmin]
     filterset_fields = ["id", "user", "phone_number", "address"]
     search_fields = ["id", "user", "phone_number", "address"]
     ordering_fields = ["id", "user", "phone_number", "address"]
@@ -71,4 +80,14 @@ class ProfileViewSet(BulkActionsMixin, viewsets.ModelViewSet):
             return Profile.objects.filter(id=self.request.user.id)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        user = self.request.user
+        profile = Profile.objects.filter(user=user).first()
+        if not profile:
+            serializer.save(user=self.request.user)
+
+    #
+    # # def destroy(self, request, *args, **kwargs):
+    # #     instance = self.get_object()
+    # #     if instance.user == request.user:
+    # #         return super().destroy(request, *args, **kwargs)
+    # #     return Response(status=status.HTTP_403_FORBIDDEN)

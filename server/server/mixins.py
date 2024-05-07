@@ -22,7 +22,10 @@ class BulkActionsMixin(viewsets.GenericViewSet):
         delete_ids = request.query_params.getlist("id", [])
         delete_objects = self.queryset.filter(pk__in=delete_ids)
         delete_objects.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        serializer = self.get_serializer(self.queryset, many=True)
+        return Response(serializer.data)
+        # return Response(self.queryset
+        # return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(methods=["PUT"], detail=False)
     def bulk_update(self, request):

@@ -29,7 +29,7 @@ class BookViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     serializer_class = BookSerializer
     ordering_fields = "__all__"
     filterset_fields = ["title", "author", "category"]
-    search_fields = ["$title", "author__name", "category__name"]
+    search_fields = ["$title", "author__name", "category__name", "description"]
 
     def perform_update(self, serializer):
         """Ensure the old image file is deleted when a new image is uploaded."""

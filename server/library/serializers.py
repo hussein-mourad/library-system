@@ -15,8 +15,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    author = serializers.StringRelatedField(source="author.name")
-    category = serializers.StringRelatedField(source="category.name")
+    # author = serializers.StringRelatedField(source="author.name")
+    # category = serializers.StringRelatedField(source="category.name")
     # To include the author and category details in the response, use the following code:
     # author = AuthorSerializer()
     # category = CategorySerializer()
