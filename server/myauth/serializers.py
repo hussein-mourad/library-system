@@ -1,3 +1,4 @@
+from django.contrib.auth.models import make_password
 from myauth.models import Profile, User
 from rest_framework import serializers
 
@@ -39,7 +40,7 @@ class UserSerializer(serializers.ModelSerializer):
             "first_name": {"required": False},
             "last_name": {"required": False},
             "email": {"required": False},
-            "password": {"write_only": True, "required": True},
+            "password": {"write_only": True, "required": False},
         }
 
     def validate_email(self, value):
@@ -51,3 +52,12 @@ class UserSerializer(serializers.ModelSerializer):
                 "A user with this email address already exists."
             )
         return value
+
+    def update(self, instance, validated_data):
+        """
+        Update the user's password if a new one is provided.
+        """
+        password = validated_data.get("password", None)
+        if password:
+            validated_data["password"] = make_password(password)
+        return super().update(instance, validated_data)
