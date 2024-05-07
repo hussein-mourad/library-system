@@ -1,9 +1,7 @@
-import AdminPanel from "@/components/admin"
+import AdminPanel from "@/components/admin";
 
 function App() {
-  return (
-    <AdminPanel />
-  )
+  return <AdminPanel />;
 }
 
-export default App
+export default App;

@@ -1,5 +1,11 @@
 import { stringify } from "query-string";
-import { Identifier, fetchUtils, DataProvider, CreateParams, UpdateParams } from "react-admin";
+import {
+  Identifier,
+  fetchUtils,
+  DataProvider,
+  CreateParams,
+  UpdateParams,
+} from "react-admin";
 
 const createFormData = (params) => {
   const formData = new FormData();
@@ -7,7 +13,7 @@ const createFormData = (params) => {
     const value = params.data[key] || "";
     if (value && value.rawFile) {
       formData.append(key, value.rawFile);
-    } else if (typeof value === 'object') {
+    } else if (typeof value === "object") {
       // Recursively check nested objects
       const nestedFormData = createFormData({ data: value });
       for (const [nestedKey, nestedValue] of nestedFormData.entries()) {

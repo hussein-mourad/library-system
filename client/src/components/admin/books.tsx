@@ -51,8 +51,11 @@ export const BookList = () => {
       ) : (
         <Datagrid rowClick="show">
           <TextField source="id" />
-          <ImageField source="cover_image"
-            sx={{ '& img': { maxWidth: 50, maxHeight: 50, objectFit: 'contain' } }}
+          <ImageField
+            source="cover_image"
+            sx={{
+              "& img": { maxWidth: 50, maxHeight: 50, objectFit: "contain" },
+            }}
           />
           <TextField source="title" />
           <ReferenceField source="author" reference="authors" link="show" />
@@ -99,41 +102,48 @@ export const BookShow = () => (
 );
 
 export const BookEdit = () => {
-  return (<Edit title={<BookTitle />} mutationMode="pessimistic">
-    <SimpleForm>
-      <TextInput
-        className="sm:w-96"
-        source="id"
-        InputProps={{ disabled: true }}
-      />
-      <ImageField source="cover_image" />
-      <ImageInput className="sm:w-96" source="cover_image" accept="image/*">
-        <ImageField source="src" title="title" />
-      </ImageInput>
-      <TextInput className="sm:w-96" source="title" />
-      <TextInput className="sm:w-96" source="description" multiline rows={5} />
-      <TextInput className="sm:w-96" source="isbn" />
-      <SelectInput
-        className="sm:w-96"
-        source="status"
-        choices={[
-          { id: "available", name: "Available" },
-          { id: "borrowed", name: "Borrowed" },
-        ]}
-      />
-      <DateInput className="sm:w-96" source="publication_date" />
-      <ReferenceInput className="sm:w-96" source="author" reference="authors">
-        <SelectInput className="sm:w-96" source="author" />
-      </ReferenceInput>
-      <ReferenceInput
-        className="sm:w-96"
-        source="category"
-        reference="categories"
-      >
-        <SelectInput className="sm:w-96" source="category" />
-      </ReferenceInput>
-    </SimpleForm>
-  </Edit>)
+  return (
+    <Edit title={<BookTitle />} mutationMode="pessimistic">
+      <SimpleForm>
+        <TextInput
+          className="sm:w-96"
+          source="id"
+          InputProps={{ disabled: true }}
+        />
+        <ImageField source="cover_image" />
+        <ImageInput className="sm:w-96" source="cover_image" accept="image/*">
+          <ImageField source="src" title="title" />
+        </ImageInput>
+        <TextInput className="sm:w-96" source="title" />
+        <TextInput
+          className="sm:w-96"
+          source="description"
+          multiline
+          rows={5}
+        />
+        <TextInput className="sm:w-96" source="isbn" />
+        <SelectInput
+          className="sm:w-96"
+          source="status"
+          choices={[
+            { id: "available", name: "Available" },
+            { id: "borrowed", name: "Borrowed" },
+          ]}
+        />
+        <DateInput className="sm:w-96" source="publication_date" />
+        <ReferenceInput className="sm:w-96" source="author" reference="authors">
+          <SelectInput className="sm:w-96" source="author" />
+        </ReferenceInput>
+        <ReferenceInput
+          className="sm:w-96"
+          source="category"
+          reference="categories"
+        >
+          <SelectInput className="sm:w-96" source="category" />
+        </ReferenceInput>
+      </SimpleForm>
+    </Edit>
+  );
 };
 
 export const BookCreate = () => (

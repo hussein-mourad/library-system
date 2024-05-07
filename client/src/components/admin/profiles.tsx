@@ -49,8 +49,17 @@ export const ProfileList = () => {
       ) : (
         <Datagrid rowClick="show">
           <TextField source="id" />
-          <ImageField source="avatar" sortable={false}
-            sx={{ '& img': { maxWidth: 35, maxHeight: 35, borderRadius: 9999, objectFit: 'contain' } }}
+          <ImageField
+            source="avatar"
+            sortable={false}
+            sx={{
+              "& img": {
+                maxWidth: 35,
+                maxHeight: 35,
+                borderRadius: 9999,
+                objectFit: "contain",
+              },
+            }}
           />
           <TextField source="username" />
           <TextField source="bio" />

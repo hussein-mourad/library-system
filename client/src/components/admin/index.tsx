@@ -6,42 +6,22 @@ import CategoryIcon from "@mui/icons-material/Category";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
-import {
-  BookEdit,
-  BookList,
-  BookCreate,
-  BookShow,
-} from "./books";
-import {
-  UserCreate,
-  UserEdit,
-  UserList,
-  UserShow,
-} from "./users";
+import { BookEdit, BookList, BookCreate, BookShow } from "./books";
+import { UserCreate, UserEdit, UserList, UserShow } from "./users";
 import {
   ProfileCreate,
   ProfileEdit,
   ProfileList,
   ProfileShow,
 } from "./profiles";
-import {
-  AuthorCreate,
-  AuthorEdit,
-  AuthorList,
-  AuthorShow,
-} from "./authors";
+import { AuthorCreate, AuthorEdit, AuthorList, AuthorShow } from "./authors";
 import {
   CategoryCreate,
   CategoryEdit,
   CategoryList,
   CategoryShow,
 } from "./categories";
-import {
-  BorrowCreate,
-  BorrowEdit,
-  BorrowList,
-  BorrowShow,
-} from "./borrows";
+import { BorrowCreate, BorrowEdit, BorrowList, BorrowShow } from "./borrows";
 import {
   CommentCreate,
   CommentEdit,
@@ -60,7 +40,6 @@ const authProvider = jwtTokenAuthProvider({
   refreshTokenUrl: `${apiUrl}/token/refresh/`,
 });
 const dataProvider = drfProvider(apiUrl, fetchJsonWithAuthJWTToken);
-
 
 function AdminPanel() {
   return (
