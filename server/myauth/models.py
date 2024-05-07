@@ -16,6 +16,9 @@ class User(AbstractUser):
     ]
     role = models.CharField(max_length=10, choices=ROLES, default="borrower")
 
+    class Meta:
+        ordering = ["id"]
+
     def save(self, *args, **kwargs):
         if self.is_superuser or self.is_staff:
             self.role = "admin"
@@ -30,6 +33,9 @@ class Profile(models.Model):
     address = models.TextField(blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
     avatar = models.ImageField(upload_to=generate_filename, blank=True, null=True)
+
+    class Meta:
+        ordering = ["id"]
 
     def save(self, *args, **kwargs):
         # save the profile first
