@@ -50,7 +50,7 @@ function Header() {
               </Typography>
             </Box>
 
-            <Box className="flex-grow flex md:hidden">
+            <Box className="mr-6 md:hidden">
               <IconButton
                 size="large"
                 aria-label="account of current user"
