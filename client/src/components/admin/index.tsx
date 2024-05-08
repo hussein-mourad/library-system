@@ -111,6 +111,7 @@ function AdminPanel() {
       authProvider={authProvider}
       dataProvider={dataProvider}
       dashboard={Dashboard}
+      basename="/admin"
       loginPage={LoginPage}
       requireAuth
     >
