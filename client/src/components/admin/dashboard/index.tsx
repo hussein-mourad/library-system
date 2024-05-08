@@ -1,5 +1,6 @@
-import { Card, CardContent, CardHeader, Typography } from "@mui/material";
-import { Button, Link, useGetList } from "react-admin";
+import { Button, Card, CardContent, Typography } from "@mui/material";
+import { Link, useGetList } from "react-admin";
+import RecentBorrows from "./recent-borrows";
 
 const StatCard = ({ resource }) => {
   const { data } = useGetList(resource);
@@ -13,7 +14,7 @@ const StatCard = ({ resource }) => {
           <Typography variant="h5" color="primary" gutterBottom>
             {capitalizeFirstLetter(resource)}
           </Typography>
-          <Typography variant="h4" >{data ? data.length : "0"}</Typography>
+          <Typography variant="h4">{data ? data.length : "0"}</Typography>
         </CardContent>
       </Card>
     </Link>
@@ -33,8 +34,10 @@ export const Dashboard = () => {
     <div className="mt-4">
       <Card>
         <CardContent className="flex items-center justify-between">
-          <Typography component="div" variant="h5" >Welcome to the Admin dashboard</Typography>
-          <Button component={Link} to={"/"} variant="contained">{"Go to app"}</Button>
+          <Typography component="div" variant="h5">
+            Welcome to the Admin dashboard
+          </Typography>
+          <Button component={Link} to={"/"} variant="contained">Go to app</Button>
         </CardContent>
       </Card>
       <div className="grid grid-cols-2 gap-4 mt-4">
@@ -42,6 +45,9 @@ export const Dashboard = () => {
           <StatCard key={index} resource={resource} />
         ))}
       </div>
-    </div >
+      {/* <div className="my-5"> */}
+      {/*   <RecentBorrows /> */}
+      {/* </div> */}
+    </div>
   );
 };
