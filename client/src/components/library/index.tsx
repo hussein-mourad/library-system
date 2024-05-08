@@ -1,33 +1,17 @@
 import {
   Admin,
   CustomRoutes,
-  AppBar,
-  ToggleThemeButton,
+  List,
+  Resource,
 } from "react-admin";
 import Layout from "./layout";
 import { Route } from "react-router-dom";
 
-const Hello = () => {
-  return <h1>Hello</h1>;
-};
-
-const PageAppBar = () => (
-  <AppBar
-    toolbar={
-      <>
-        <ToggleThemeButton />
-      </>
-    }
-  ></AppBar>
-);
-const PageLayout = (props) => (
-  <Layout {...props} appBar={PageAppBar}>
-    {props.children}
-  </Layout>
-);
-
 function BookList() {
-  return <div>BookList</div>;
+  return (
+    <List>
+
+    </List>);
 }
 
 function Library({ dataProvider, authProvider }) {
@@ -38,9 +22,10 @@ function Library({ dataProvider, authProvider }) {
       layout={Layout}
       darkTheme={{ palette: { mode: "dark" } }}
     >
-      <CustomRoutes>
-        <Route path="/" element={<BookList />} />
-      </CustomRoutes>
+      <Resource name="books" list={BookList} />
+      {/* <CustomRoutes> */}
+      {/*   <Route path="/" element={<BookList />} /> */}
+      {/* </CustomRoutes> */}
     </Admin>
   );
 }

@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Routes>
         <Route
-          path="/"
+          path="/*"
           element={
             <Library dataProvider={dataProvider} authProvider={authProvider} />
           }

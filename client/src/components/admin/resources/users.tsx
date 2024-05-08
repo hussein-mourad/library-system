@@ -79,7 +79,8 @@ export const UserEdit = (props) => {
   const transform = (data) => {
     // Filter out the unchanged email field
     // console.log("transform", data, props.record.email)
-    if (data?.email && data.email === props.record.email) {
+    console.log(data, props)
+    if (data?.email && data.email === props.record?.email) {
       const { email, ...rest } = data;
       return rest;
     }
