@@ -1,4 +1,11 @@
-import { Admin, Resource } from "react-admin";
+import {
+  Admin,
+  AppBar,
+  Layout,
+  LoadingIndicator,
+  Resource,
+  ToggleThemeButton,
+} from "react-admin";
 import UserIcon from "@mui/icons-material/Group";
 import CommentIcon from "@mui/icons-material/Comment";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
@@ -14,14 +21,24 @@ import {
   ProfileList,
   ProfileShow,
 } from "./resources/profiles";
-import { AuthorCreate, AuthorEdit, AuthorList, AuthorShow } from "./resources/authors";
+import {
+  AuthorCreate,
+  AuthorEdit,
+  AuthorList,
+  AuthorShow,
+} from "./resources/authors";
 import {
   CategoryCreate,
   CategoryEdit,
   CategoryList,
   CategoryShow,
 } from "./resources/categories";
-import { BorrowCreate, BorrowEdit, BorrowList, BorrowShow } from "./resources/borrows";
+import {
+  BorrowCreate,
+  BorrowEdit,
+  BorrowList,
+  BorrowShow,
+} from "./resources/borrows";
 import {
   CommentCreate,
   CommentEdit,
@@ -29,31 +46,21 @@ import {
   CommentShow,
 } from "./resources/comments";
 import { Dashboard } from "./dashboard";
-import drfProvider from "@/providers/drf-provider";
-import jwtTokenAuthProvider, {
-  fetchJsonWithAuthJWTToken,
-} from "@/providers/auth-provider";
 import LoginPage from "./login";
-
-const apiUrl = import.meta.env.VITE_API_URL as string;
-const authProvider = jwtTokenAuthProvider({
-  obtainAuthTokenUrl: `${apiUrl}/token/`,
-  refreshTokenUrl: `${apiUrl}/token/refresh/`,
-});
-const dataProvider = drfProvider(apiUrl, fetchJsonWithAuthJWTToken);
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const resources = [
   {
-    name: 'users',
+    name: "users",
     list: UserList,
     show: UserShow,
     edit: UserEdit,
     create: UserCreate,
-    recordRepresentation: 'username',
+    recordRepresentation: "username",
     icon: UserIcon,
   },
   {
-    name: 'profiles',
+    name: "profiles",
     list: ProfileList,
     show: ProfileShow,
     edit: ProfileEdit,
@@ -61,34 +68,34 @@ const resources = [
     icon: AccountBoxIcon,
   },
   {
-    name: 'authors',
+    name: "authors",
     list: AuthorList,
     show: AuthorShow,
     edit: AuthorEdit,
     create: AuthorCreate,
-    recordRepresentation: 'name',
+    recordRepresentation: "name",
     icon: DriveFileRenameOutlineIcon,
   },
   {
-    name: 'categories',
+    name: "categories",
     list: CategoryList,
     show: CategoryShow,
     edit: CategoryEdit,
     create: CategoryCreate,
-    recordRepresentation: 'name',
+    recordRepresentation: "name",
     icon: CategoryIcon,
   },
   {
-    name: 'books',
+    name: "books",
     list: BookList,
     show: BookShow,
     edit: BookEdit,
     create: BookCreate,
-    recordRepresentation: 'title',
+    recordRepresentation: "title",
     icon: LibraryBooksIcon,
   },
   {
-    name: 'borrows',
+    name: "borrows",
     list: BorrowList,
     show: BorrowShow,
     edit: BorrowEdit,
@@ -96,7 +103,7 @@ const resources = [
     icon: BookOnlineIcon,
   },
   {
-    name: 'comments',
+    name: "comments",
     list: CommentList,
     show: CommentShow,
     edit: CommentEdit,
@@ -105,14 +112,32 @@ const resources = [
   },
 ];
 
-function AdminPanel() {
+const PageToolBar = () => (
+  <>
+    <LoadingIndicator />
+    <ToggleThemeButton />
+  </>
+);
+
+const PageAppBar = () => <AppBar toolbar={<PageToolBar />} />;
+
+const PageLayout = (props) => (
+  <>
+    <Layout {...props} appBar={PageAppBar} />
+    {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+  </>
+);
+
+function AdminPanel({ dataProvider, authProvider }) {
   return (
     <Admin
+      layout={PageLayout}
       authProvider={authProvider}
       dataProvider={dataProvider}
       dashboard={Dashboard}
       basename="/admin"
       loginPage={LoginPage}
+      darkTheme={{ palette: { mode: "dark" } }}
       requireAuth
     >
       {resources.map((resource, index) => (
