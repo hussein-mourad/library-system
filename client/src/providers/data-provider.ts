@@ -71,7 +71,7 @@ const dataProvider: DataProvider = {
 
   update: (resource, params) =>
     httpClient(`${apiUrl}/${resource}/${params.id}/`, {
-      method: "PUT",
+      method: "PATCH",
       body: JSON.stringify(params.data),
     }).then(({ json }) => ({ data: json })),
 
@@ -79,7 +79,7 @@ const dataProvider: DataProvider = {
     return httpClient(
       `${apiUrl}/${resource}bulk_update/?${formatIdList(params.ids)}`,
       {
-        method: "PUT",
+        method: "PATCH",
         body: JSON.stringify(params.data),
       },
     ).then(({ json }) => ({ data: [...json] }));

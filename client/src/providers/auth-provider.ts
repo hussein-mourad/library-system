@@ -1,4 +1,4 @@
-import { fetchUtils } from 'react-admin';
+import { fetchUtils } from "react-admin";
 
 export interface Options {
   obtainAuthTokenUrl?: string;
@@ -12,18 +12,18 @@ function jwtTokenAuthProvider(options: Options = {}) {
   return {
     login: async ({ username, password }) => {
       const request = new Request(opts.obtainAuthTokenUrl, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({ username, password }),
-        headers: new Headers({ 'Content-Type': 'application/json' }),
+        headers: new Headers({ "Content-Type": "application/json" }),
       });
       const response = await fetch(request);
       if (response.ok) {
         const responseJSON = await response.json();
-        localStorage.setItem('access', responseJSON.access);
-        localStorage.setItem('refresh', responseJSON.refresh);
+        localStorage.setItem("access", responseJSON.access);
+        localStorage.setItem("refresh", responseJSON.refresh);
         return;
       }
-      if (response.headers.get('content-type') !== 'application/json') {
+      if (response.headers.get("content-type") !== "application/json") {
         throw new Error(response.statusText);
       }
 
@@ -33,23 +33,26 @@ function jwtTokenAuthProvider(options: Options = {}) {
     },
 
     logout: () => {
-      localStorage.removeItem('access');
-      localStorage.removeItem('refresh');
+      localStorage.removeItem("access");
+      localStorage.removeItem("refresh");
       return Promise.resolve();
     },
 
-    checkAuth: () => { return localStorage.getItem('access') ? Promise.resolve() : Promise.reject() },
+    checkAuth: () => {
+      return localStorage.getItem("access")
+        ? Promise.resolve()
+        : Promise.reject();
+    },
 
-    checkError: error => {
+    checkError: (error) => {
       const status = error.status;
       if (status === 401 || status === 403) {
-        localStorage.removeItem('access');
-        localStorage.removeItem('refresh');
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
         return Promise.reject();
       }
       return Promise.resolve();
     },
-
 
     getPermissions: () => {
       return Promise.resolve();
@@ -58,14 +61,14 @@ function jwtTokenAuthProvider(options: Options = {}) {
 }
 
 export function createOptionsFromJWTToken() {
-  const token = localStorage.getItem('access');
+  const token = localStorage.getItem("access");
   if (!token) {
     return {};
   }
   return {
     user: {
       authenticated: true,
-      token: 'Bearer ' + token,
+      token: "Bearer " + token,
     },
   };
 }
@@ -73,7 +76,7 @@ export function createOptionsFromJWTToken() {
 export function fetchJsonWithAuthJWTToken(url: string, options: object) {
   return fetchUtils.fetchJson(
     url,
-    Object.assign(createOptionsFromJWTToken(), options)
+    Object.assign(createOptionsFromJWTToken(), options),
   );
 }
 export default jwtTokenAuthProvider;
