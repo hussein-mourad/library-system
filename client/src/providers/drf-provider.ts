@@ -1,10 +1,5 @@
 import { stringify } from "query-string";
-import {
-  Identifier,
-  fetchUtils,
-  DataProvider,
-} from "react-admin";
-
+import { Identifier, fetchUtils, DataProvider } from "react-admin";
 
 const createFormData = (params) => {
   const formData = new FormData();

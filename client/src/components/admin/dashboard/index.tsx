@@ -37,7 +37,9 @@ export const Dashboard = () => {
           <Typography component="div" variant="h5">
             Welcome to the Admin dashboard
           </Typography>
-          <Button component={Link} to={"/"} variant="contained">Go to app</Button>
+          <Button component={Link} to={"/"} variant="contained">
+            Go to app
+          </Button>
         </CardContent>
       </Card>
       <div className="grid grid-cols-2 gap-4 mt-4">

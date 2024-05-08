@@ -1,4 +1,11 @@
-import { Admin, AppBar, Layout, Resource, ToggleThemeButton } from "react-admin";
+import {
+  Admin,
+  AppBar,
+  Layout,
+  LoadingIndicator,
+  Resource,
+  ToggleThemeButton,
+} from "react-admin";
 import UserIcon from "@mui/icons-material/Group";
 import CommentIcon from "@mui/icons-material/Comment";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
@@ -39,19 +46,8 @@ import {
   CommentShow,
 } from "./resources/comments";
 import { Dashboard } from "./dashboard";
-import drfProvider from "@/providers/drf-provider";
-import jwtTokenAuthProvider, {
-  fetchJsonWithAuthJWTToken,
-} from "@/providers/auth-provider";
 import LoginPage from "./login";
-import { ReactQueryDevtools } from 'react-query/devtools';
-
-const apiUrl = import.meta.env.VITE_API_URL as string;
-const authProvider = jwtTokenAuthProvider({
-  obtainAuthTokenUrl: `${apiUrl}/token/`,
-  refreshTokenUrl: `${apiUrl}/token/refresh/`,
-});
-const dataProvider = drfProvider(apiUrl, fetchJsonWithAuthJWTToken);
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const resources = [
   {
@@ -116,17 +112,23 @@ const resources = [
   },
 ];
 
-export const PageAppBar = () => (
-  <AppBar toolbar={<ToggleThemeButton />} />
-);
-export const PageLayout = props => (
+const PageToolBar = () => (
   <>
-    <Layout {...props} appBar={PageAppBar} />
-    <ReactQueryDevtools initialIsOpen={false} />
+    <LoadingIndicator />
+    <ToggleThemeButton />
   </>
 );
 
-function AdminPanel() {
+const PageAppBar = () => <AppBar toolbar={<PageToolBar />} />;
+
+const PageLayout = (props) => (
+  <>
+    <Layout {...props} appBar={PageAppBar} />
+    {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+  </>
+);
+
+function AdminPanel({ dataProvider, authProvider }) {
   return (
     <Admin
       layout={PageLayout}
@@ -135,8 +137,7 @@ function AdminPanel() {
       dashboard={Dashboard}
       basename="/admin"
       loginPage={LoginPage}
-
-      darkTheme={{ palette: { mode: 'dark' } }}
+      darkTheme={{ palette: { mode: "dark" } }}
       requireAuth
     >
       {resources.map((resource, index) => (
