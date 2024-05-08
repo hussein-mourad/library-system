@@ -3,9 +3,8 @@ import {
   Identifier,
   fetchUtils,
   DataProvider,
-  CreateParams,
-  UpdateParams,
 } from "react-admin";
+
 
 const createFormData = (params) => {
   const formData = new FormData();
