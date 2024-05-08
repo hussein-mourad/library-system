@@ -50,13 +50,19 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.BasicAuthentication",
     ),
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "DEFAULT_PAGINATION_CLASS": "server.pagination.DynamicPerPagePagination",
     "PAGE_SIZE": 10,
 }
+
+# CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
 
 # Application definition
 
 INSTALLED_APPS = [
+    "corsheaders",
     "myauth",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -67,11 +73,13 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework",
     "library",
+    "django_cleanup",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",

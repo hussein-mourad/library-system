@@ -1,0 +1,34 @@
+name: Client test CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      # Install Node.js and npm
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '21'
+          
+      # Install dependencies and build
+      - name: Install dependencies and build
+        run: |
+          cd client
+          npm install
+          npm run build
+          
+      # Run tests if you have them
+      - name: Run tests
+        run: |
+          cd client
+          npm run test

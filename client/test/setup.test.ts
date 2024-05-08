@@ -1,4 +1,3 @@
-
 import { expect, test } from 'vitest'
 
 test('test that setup is correct', () => {

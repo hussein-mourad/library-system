@@ -1,7 +1,10 @@
+import os
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from library.utils import generate_filename
 from PIL import Image
+
+from server.utils import generate_filename
 
 
 class User(AbstractUser):
@@ -9,9 +12,12 @@ class User(AbstractUser):
         ("admin", "Admin"),
         ("librarian", "Librarian"),
         ("assistant", "Assistant"),
-        ("borrower", "Borrower"),
+        ("member", "Member"),
     ]
-    role = models.CharField(max_length=10, choices=ROLES, default="borrower")
+    role = models.CharField(max_length=10, choices=ROLES, default="member")
+
+    class Meta:
+        ordering = ["id"]
 
     def save(self, *args, **kwargs):
         if self.is_superuser or self.is_staff:
@@ -28,11 +34,18 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=15, blank=True)
     avatar = models.ImageField(upload_to=generate_filename, blank=True, null=True)
 
+    class Meta:
+        ordering = ["id"]
+
     def save(self, *args, **kwargs):
         # save the profile first
         super().save(*args, **kwargs)
         # resize the image
         if not self.avatar:
+            return
+        if not self.avatar.path:
+            return
+        if not os.path.isfile(self.avatar.path):
             return
         img = Image.open(self.avatar.path)
         if img.height > 150 or img.width > 150:
