@@ -33,6 +33,7 @@ import drfProvider from "@/providers/drf-provider";
 import jwtTokenAuthProvider, {
   fetchJsonWithAuthJWTToken,
 } from "@/providers/auth-provider";
+import LoginPage from "./login";
 
 const apiUrl = import.meta.env.VITE_API_URL as string;
 const authProvider = jwtTokenAuthProvider({
@@ -110,6 +111,7 @@ function AdminPanel() {
       authProvider={authProvider}
       dataProvider={dataProvider}
       dashboard={Dashboard}
+      loginPage={LoginPage}
       requireAuth
     >
       {resources.map((resource, index) => (
