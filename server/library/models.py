@@ -42,7 +42,7 @@ class Book(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
-    isbn = models.CharField(max_length=13, unique=True)
+    isbn = models.CharField(max_length=30, unique=True)
     cover_image = models.ImageField(
         upload_to=generate_filename,
         blank=True,

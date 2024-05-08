@@ -13,7 +13,7 @@ class AuthorViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     serializer_class = AuthorSerializer
     filterset_fields = ["name"]
     ordering_fields = ["name"]
-    search_fields = ["$name"]
+    search_fields = ["$name", "$bio"]
 
 
 class CategoryViewSet(BulkActionsMixin, viewsets.ModelViewSet):
@@ -31,19 +31,19 @@ class BookViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     filterset_fields = ["title", "author", "category"]
     search_fields = ["$title", "author__name", "category__name", "description"]
 
-    def perform_update(self, serializer):
-        """Ensure the old image file is deleted when a new image is uploaded."""
-        instance = serializer.instance
-        old_instance = Book.objects.get(pk=instance.pk)
-        old_image = old_instance.cover_image
-        new_image = serializer.validated_data.get("cover_image", None)
-        # Call the parent perform_update method to save the update
-        super().perform_update(serializer)
-        # Compare old and new images
-        if old_image and new_image and old_image.read() != new_image.read():
-            # Delete the old image file
-            if os.path.isfile(old_image.path):
-                os.remove(old_image.path)
+    # def perform_update(self, serializer):
+    #     """Ensure the old image file is deleted when a new image is uploaded."""
+    #     instance = serializer.instance
+    #     old_instance = Book.objects.get(pk=instance.pk)
+    #     old_image = old_instance.cover_image
+    #     new_image = serializer.validated_data.get("cover_image", None)
+    #     # Call the parent perform_update method to save the update
+    #     super().perform_update(serializer)
+    #     # Compare old and new images
+    #     if old_image and new_image and old_image.read() != new_image.read():
+    #         # Delete the old image file
+    #         if os.path.isfile(old_image.path):
+    #             os.remove(old_image.path)
 
 
 class BorrowViewSet(BulkActionsMixin, viewsets.ModelViewSet):
