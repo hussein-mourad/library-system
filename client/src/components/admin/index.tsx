@@ -6,33 +6,34 @@ import CategoryIcon from "@mui/icons-material/Category";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
-import { BookEdit, BookList, BookCreate, BookShow } from "./books";
-import { UserCreate, UserEdit, UserList, UserShow } from "./users";
+import { BookEdit, BookList, BookCreate, BookShow } from "./resources/books";
+import { UserCreate, UserEdit, UserList, UserShow } from "./resources/users";
 import {
   ProfileCreate,
   ProfileEdit,
   ProfileList,
   ProfileShow,
-} from "./profiles";
-import { AuthorCreate, AuthorEdit, AuthorList, AuthorShow } from "./authors";
+} from "./resources/profiles";
+import { AuthorCreate, AuthorEdit, AuthorList, AuthorShow } from "./resources/authors";
 import {
   CategoryCreate,
   CategoryEdit,
   CategoryList,
   CategoryShow,
-} from "./categories";
-import { BorrowCreate, BorrowEdit, BorrowList, BorrowShow } from "./borrows";
+} from "./resources/categories";
+import { BorrowCreate, BorrowEdit, BorrowList, BorrowShow } from "./resources/borrows";
 import {
   CommentCreate,
   CommentEdit,
   CommentList,
   CommentShow,
-} from "./comments";
+} from "./resources/comments";
 import { Dashboard } from "./dashboard";
 import drfProvider from "@/providers/drf-provider";
 import jwtTokenAuthProvider, {
   fetchJsonWithAuthJWTToken,
 } from "@/providers/auth-provider";
+import LoginPage from "./login";
 
 const apiUrl = import.meta.env.VITE_API_URL as string;
 const authProvider = jwtTokenAuthProvider({
@@ -110,6 +111,8 @@ function AdminPanel() {
       authProvider={authProvider}
       dataProvider={dataProvider}
       dashboard={Dashboard}
+      basename="/admin"
+      loginPage={LoginPage}
       requireAuth
     >
       {resources.map((resource, index) => (
