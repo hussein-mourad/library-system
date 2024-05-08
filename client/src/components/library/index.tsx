@@ -2,10 +2,9 @@ import {
   Admin,
   CustomRoutes,
   AppBar,
-  Layout,
   ToggleThemeButton,
-  useListPaginationContext,
 } from "react-admin";
+import Layout from "./layout";
 import { Route } from "react-router-dom";
 
 const Hello = () => {
@@ -36,7 +35,7 @@ function Library({ dataProvider, authProvider }) {
     <Admin
       dataProvider={dataProvider}
       authProvider={authProvider}
-      layout={PageLayout}
+      layout={Layout}
     >
       <CustomRoutes>
         <Route path="/" element={<BookList />} />
