@@ -1,6 +1,25 @@
 import { useMediaQuery, Theme } from "@mui/material";
-import { Create, Datagrid, DateField, DateInput, Edit, EditButton, Labeled, List, ReferenceField, ReferenceInput, SelectField, Show, SimpleForm, SimpleList, SimpleShowLayout, TextField, TextInput, UrlField, useRecordContext } from 'react-admin';
-
+import {
+  Create,
+  Datagrid,
+  DateField,
+  DateInput,
+  Edit,
+  EditButton,
+  Labeled,
+  List,
+  ReferenceField,
+  ReferenceInput,
+  SelectField,
+  Show,
+  SimpleForm,
+  SimpleList,
+  SimpleShowLayout,
+  TextField,
+  TextInput,
+  UrlField,
+  useRecordContext,
+} from "react-admin";
 
 const booksFilters = [
   <TextInput source="search" label="Search" alwaysOn />,
@@ -13,32 +32,35 @@ const BookTitle = () => {
   return <span>Book {record ? `"${record.title}"` : ""}</span>;
 };
 
-
 export const BookList = () => {
-  const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
+  const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
   return (
     <List filters={booksFilters}>
       {isSmall ? (
         <SimpleList
-          primaryText={record => record.title}
-          secondaryText={record => record.isbn}
-          tertiaryText={record => record.status}
+          primaryText={(record) => record.title}
+          secondaryText={(record) => record.isbn}
+          tertiaryText={(record) => record.status}
         />
       ) : (
         <Datagrid rowClick="show">
           <TextField source="id" />
           <ReferenceField source="author" reference="authors" link="show" />
           <TextField source="title" />
-          <ReferenceField source="category" reference="categories" link="show" />
+          <ReferenceField
+            source="category"
+            reference="categories"
+            link="show"
+          />
           <TextField source="isbn" />
           <DateField source="publication_date" />
           <TextField source="status" />
           <EditButton />
-        </Datagrid >
+        </Datagrid>
       )}
-    </List >
-  )
-}
+    </List>
+  );
+};
 
 export const BookShow = () => (
   <Show title={<BookTitle />}>
@@ -56,7 +78,6 @@ export const BookShow = () => (
   </Show>
 );
 
-
 export const BookEdit = () => (
   <Edit title={<BookTitle />}>
     <SimpleForm>
@@ -68,10 +89,8 @@ export const BookEdit = () => (
       {/* <SelectField source="author" reference="authors" /> */}
       <DateInput source="publication_date" />
       {/* <TextInput source="status" /> */}
-      <SelectField source="status" choices={[
-        "available", "borrowed"
-      ]} />
-      <Labeled label="Author" >
+      <SelectField source="status" choices={["available", "borrowed"]} />
+      <Labeled label="Author">
         <ReferenceField source="author" reference="authors" link="edit" />
       </Labeled>
       <Labeled label="Category">

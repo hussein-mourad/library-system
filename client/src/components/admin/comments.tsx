@@ -1,4 +1,10 @@
-import { List, TextField, Datagrid, ReferenceField, DateField } from "react-admin"
+import {
+  List,
+  TextField,
+  Datagrid,
+  ReferenceField,
+  DateField,
+} from "react-admin";
 
 export const CommentList = () => {
   return (
@@ -11,6 +17,5 @@ export const CommentList = () => {
         {/* <ReferenceField source="user" /> */}
       </Datagrid>
     </List>
-  )
-}
-
+  );
+};

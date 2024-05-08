@@ -4,37 +4,36 @@ import { stringify } from "query-string";
 const apiUrl = import.meta.env.VITE_API_URL as string;
 
 const httpClient = (url: string, options = {}) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (token) {
-    options.headers.set('Authorization', `Bearer ${token}`);
+    options.headers.set("Authorization", `Bearer ${token}`);
   }
-  return fetchUtils.fetchJson(url, options)
-}
+  return fetchUtils.fetchJson(url, options);
+};
 
-const formatIdList = (ids) => ids.map(id => `id=${id}`).join('&');
-
+const formatIdList = (ids) => ids.map((id) => `id=${id}`).join("&");
 
 const getFiltering = (params: any) => {
   const { search, ...filter } = params.filter;
-  return { search, ...filter }
-}
+  return { search, ...filter };
+};
 
 const getOrdering = (params: any) => {
   const { field, order } = params.sort;
-  return { ordering: `${order === 'ASC' ? '' : '-'}${field}` }
-}
+  return { ordering: `${order === "ASC" ? "" : "-"}${field}` };
+};
 
 const getPagination = (params: any) => {
   const { page, perPage } = params.pagination;
-  return { page, perPage }
-}
+  return { page, perPage };
+};
 
-export const dataProvider: DataProvider = {
+const dataProvider: DataProvider = {
   getList: (resource, params) => {
     const query = {
       ...getPagination(params),
       ...getOrdering(params),
-      ...getFiltering(params)
+      ...getFiltering(params),
     };
     const url = `${apiUrl}/${resource}/?${stringify(query)}`;
     return httpClient(url).then(({ headers, json }) => ({
@@ -59,30 +58,37 @@ export const dataProvider: DataProvider = {
       ...getOrdering(params),
       ...getFiltering(params),
       [params.target]: params.id,
-    }
-    const url = `${apiUrl}/${resource}?${stringify(query)}`;
+    };
+    const url = `${apiUrl}/${resource}/?${stringify(query)}`;
     return httpClient(url).then(({ headers, json }) => ({
       data: json,
-      total: parseInt((headers.get('content-range') || "0").split('/').pop() || '0', 10),
+      total: parseInt(
+        (headers.get("content-range") || "0").split("/").pop() || "0",
+        10,
+      ),
     }));
   },
 
   update: (resource, params) =>
     httpClient(`${apiUrl}/${resource}/${params.id}/`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(params.data),
     }).then(({ json }) => ({ data: json })),
 
   updateMany: (resource, params) => {
-    return httpClient(`${apiUrl}/${resource}bulk_update/?${formatIdList(params.ids)}`, {
-      method: 'PUT',
-      body: JSON.stringify(params.data),
-    }).then(({ json }) => ({ data: [...json] }));
+    return httpClient(
+      `${apiUrl}/${resource}bulk_update/?${formatIdList(params.ids)}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(params.data),
+      },
+    ).then(({ json }) => ({ data: [...json] }));
   },
 
   create: (resource, params) =>
-    httpClient(`${apiUrl}/${resource}`, {
-      method: 'POST',
+    console.log(params.data) ||
+    httpClient(`${apiUrl}/${resource}/`, {
+      method: "POST",
       body: JSON.stringify(params.data),
     }).then(({ json }) => ({
       data: { ...params.data, id: json.id } as any,
@@ -90,14 +96,16 @@ export const dataProvider: DataProvider = {
 
   delete: (resource, params) =>
     httpClient(`${apiUrl}/${resource}/${params.id}/`, {
-      method: 'DELETE',
-    }).then(() => ({ data: params.previousData } as any)),
+      method: "DELETE",
+    }).then(() => ({ data: params.previousData }) as any),
 
   deleteMany: (resource, params) => {
-    return httpClient(`${apiUrl}/${resource}/bulk_delete/?${formatIdList(params.ids)}`, {
-      method: 'DELETE',
-    }).then(({ json }) => ({ data: [...json] })
-    );
-  }
+    return httpClient(
+      `${apiUrl}/${resource}/bulk_delete/?${formatIdList(params.ids)}`,
+      {
+        method: "DELETE",
+      },
+    ).then(({ json }) => ({ data: [...json] }));
+  },
 };
-
+export default dataProvider;
