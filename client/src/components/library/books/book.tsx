@@ -30,7 +30,7 @@ function Book({ book }: { book: Book }) {
   if (!book) return null;
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card className="w-full max-w-96 flex flex-col">
       {/* <CardActionArea onClick={() => console.log('hello world')}> */}
       <CardMedia
         component="img"
@@ -39,13 +39,12 @@ function Book({ book }: { book: Book }) {
         image={book.cover_image || BookPlaceholder}
         alt="green iguana"
       />
-      <CardContent>
+      <CardContent className="flex-grow h-full">
         <Typography gutterBottom variant="h5" component="div">
           {book.title}
         </Typography>
 
-        <Box className="flex justify-between">
-
+        <Box className="flex justify-between mb-2">
           <Link to={`/authors/${book.author}`}>
             <Typography color="text.secondary">
               {author && author.name}
@@ -63,12 +62,12 @@ function Book({ book }: { book: Book }) {
         </Link>
       </CardContent>
       {/* </CardActionArea> */}
-      <CardActions>
+      <CardActions >
         <Button size="small" color="primary">
           Borrow
         </Button>
       </CardActions>
-    </Card>
+    </Card >
   );
 }
 
