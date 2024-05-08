@@ -1,6 +1,8 @@
 from myauth.models import Profile, User
 from myauth.serializers import ProfileSerializer, UserSerializer
 from rest_framework import permissions, viewsets
+from rest_framework.mixins import Response
+from rest_framework.views import APIView
 
 from server.mixins import BulkActionsMixin
 from server.permissions import IsOwnerOrAdmin
@@ -63,6 +65,16 @@ class UserViewSet(BulkActionsMixin, viewsets.ModelViewSet):
             user.is_staff = False
             user.is_superuser = False
         user.save()
+
+
+class CurrentUserView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        profile = Profile.objects.get(id=request.user.id)
+        serializer_profile = ProfileSerializer(profile)
+        return Response({"user": serializer.data, "profile": serializer_profile.data})
 
 
 class ProfileViewSet(BulkActionsMixin, viewsets.ModelViewSet):
