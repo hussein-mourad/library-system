@@ -36,6 +36,7 @@ function Library({ dataProvider, authProvider }) {
       dataProvider={dataProvider}
       authProvider={authProvider}
       layout={Layout}
+      darkTheme={{ palette: { mode: "dark" } }}
     >
       <CustomRoutes>
         <Route path="/" element={<BookList />} />
