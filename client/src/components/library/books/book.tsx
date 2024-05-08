@@ -6,41 +6,63 @@ import {
   CardMedia,
   Button,
   Typography,
+  Box,
 } from "@mui/material";
 
+import BookPlaceholder from "@/assets/book-cover-placeholder.png";
+import { useEffect } from "react";
+import { Link, useGetOne } from "react-admin";
+
 export interface Book {
-  id: string;
+  id: number;
   title: string;
   description: string;
-  author: string;
-  category: string;
   publication_date: string;
+  cover_image: string;
+  author: number;
+  category: number;
 }
 
 function Book({ book }: { book: Book }) {
+  const { data: author } = useGetOne('authors', { id: book.author });
+  const { data: category } = useGetOne('categories', { id: book.category });
+
+  if (!book) return null;
+
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          className="max-h-[400px]"
-          height="80"
-          image={book.cover_image}
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {book.title}
+      {/* <CardActionArea onClick={() => console.log('hello world')}> */}
+      <CardMedia
+        component="img"
+        className="max-h-[400px]"
+        height="80"
+        image={book.cover_image || BookPlaceholder}
+        alt="green iguana"
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {book.title}
+        </Typography>
+
+        <Box className="flex justify-between">
+
+          <Link to={`/authors/${book.author}`}>
+            <Typography color="text.secondary">
+              {author && author.name}
+            </Typography>
+          </Link>
+          <Typography color="text.secondary">
+            {book.publication_date?.substring(0, 4)}
           </Typography>
-          <Typography variant="h6" color="text.secondary">
-            {book.author} - {book.publication_date.substring(0, 4)} -{" "}
-            {book.category}
+        </Box>
+
+        <Link to={`/categories/${book.category}`}>
+          <Typography color="text.secondary">
+            {category && category?.name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {book.description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+        </Link>
+      </CardContent>
+      {/* </CardActionArea> */}
       <CardActions>
         <Button size="small" color="primary">
           Borrow
