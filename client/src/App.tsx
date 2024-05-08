@@ -1,58 +1,107 @@
 import "./App.css";
-import {
-  Admin,
-  EditGuesser,
-  ListGuesser,
-  Resource,
-  ShowGuesser,
-} from "react-admin";
+import { Admin, Resource } from "react-admin";
 import UserIcon from "@mui/icons-material/Group";
-import CommentIcon from '@mui/icons-material/Comment';
-import AttributionIcon from '@mui/icons-material/Attribution';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import CategoryIcon from '@mui/icons-material/Category';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-import BookOnlineIcon from '@mui/icons-material/BookOnline';
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import CommentIcon from "@mui/icons-material/Comment";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import CategoryIcon from "@mui/icons-material/Category";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import BookOnlineIcon from "@mui/icons-material/BookOnline";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import {
   BookEdit,
   BookList,
   BookCreate,
   BookShow,
 } from "@/components/admin/books";
-import dataProvider from "@/providers/data-provider";
-// import { CommentList } from "@/components/admin/comments"
+import {
+  UserCreate,
+  UserEdit,
+  UserList,
+  UserShow,
+} from "@/components/admin/users";
+import {
+  ProfileCreate,
+  ProfileEdit,
+  ProfileList,
+  ProfileShow,
+} from "@/components/admin/profiles";
+import {
+  AuthorCreate,
+  AuthorEdit,
+  AuthorList,
+  AuthorShow,
+} from "@/components/admin/authors";
+import {
+  CategoryCreate,
+  CategoryEdit,
+  CategoryList,
+  CategoryShow,
+} from "@/components/admin/categories";
+import {
+  BorrowCreate,
+  BorrowEdit,
+  BorrowList,
+  BorrowShow,
+} from "@/components/admin/borrows";
+import {
+  CommentCreate,
+  CommentEdit,
+  CommentList,
+  CommentShow,
+} from "@/components/admin/comments";
+import { Dashboard } from "@/components/admin/dashboard";
+import drfProvider from "@/providers/drf-provider";
+import jwtTokenAuthProvider, {
+  fetchJsonWithAuthJWTToken,
+} from "@/providers/auth-provider";
+
+const apiUrl = import.meta.env.VITE_API_URL as string;
+const authProvider = jwtTokenAuthProvider({
+  obtainAuthTokenUrl: `${apiUrl}/token/`,
+  refreshTokenUrl: `${apiUrl}/token/refresh/`,
+});
+const dataProvider = drfProvider(apiUrl, fetchJsonWithAuthJWTToken);
 
 function App() {
   return (
-    <Admin dataProvider={dataProvider}>
+    <Admin
+      authProvider={authProvider}
+      dataProvider={dataProvider}
+      dashboard={Dashboard}
+      requireAuth
+    >
       <Resource
         name="users"
-        list={ListGuesser}
-        show={ShowGuesser}
-        edit={EditGuesser}
+        list={UserList}
+        show={UserShow}
+        edit={UserEdit}
+        create={UserCreate}
+        recordRepresentation="username"
         icon={UserIcon}
       />
       <Resource
         name="profiles"
-        list={ListGuesser}
-        show={ShowGuesser}
-        edit={EditGuesser}
+        list={ProfileList}
+        show={ProfileShow}
+        edit={ProfileEdit}
+        create={ProfileCreate}
         icon={AccountBoxIcon}
       />
       <Resource
         name="authors"
-        list={ListGuesser}
-        show={ShowGuesser}
-        edit={EditGuesser}
+        list={AuthorList}
+        show={AuthorShow}
+        edit={AuthorEdit}
+        create={AuthorCreate}
         recordRepresentation="name"
         icon={DriveFileRenameOutlineIcon}
       />
       <Resource
         name="categories"
-        list={ListGuesser}
-        show={ShowGuesser}
-        edit={EditGuesser}
+        list={CategoryList}
+        show={CategoryShow}
+        edit={CategoryEdit}
+        create={CategoryCreate}
         recordRepresentation="name"
         icon={CategoryIcon}
       />
@@ -62,20 +111,23 @@ function App() {
         show={BookShow}
         edit={BookEdit}
         create={BookCreate}
+        recordRepresentation="title"
         icon={LibraryBooksIcon}
       />
       <Resource
         name="borrows"
-        list={ListGuesser}
-        show={ShowGuesser}
-        edit={EditGuesser}
+        list={BorrowList}
+        show={BorrowShow}
+        edit={BorrowEdit}
+        create={BorrowCreate}
         icon={BookOnlineIcon}
       />
       <Resource
         name="comments"
-        list={ListGuesser}
-        show={ShowGuesser}
-        edit={EditGuesser}
+        list={CommentList}
+        show={CommentShow}
+        edit={CommentEdit}
+        create={CommentCreate}
         icon={CommentIcon}
       />
     </Admin>
