@@ -6,17 +6,27 @@ import { useParams } from "react-router-dom";
 
 function BorrowReturn() {
   const { id } = useParams();
-  const dataProvider = useDataProvider();
-  const [status, setStatus] = useState("loading");
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
+  const [update] = useUpdate(
+    "borrows",
+    { id, data: { returned: true } },
+    {
+      onSuccess: () => setSuccess(true),
+      onError: () => setError(true),
+    },
+  );
 
   useEffect(() => {
     if (!id) return;
-    dataProvider
-      .update("borrows", { id, data: { returned: true } })
-      .then(() => {
-        console.log("Book returned");
-      });
+    update();
   }, [id]);
+
+  if (error) {
+    return <p>ERROR</p>;
+  }
+  if (!success) return null;
 
   return (
     <div className="mt-5 space-y-5">
