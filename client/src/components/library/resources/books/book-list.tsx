@@ -19,13 +19,14 @@ export function BookListContent() {
         books.map((book) => (
           <Grid
             item
+            key={book.id}
             xs={12}
             sm={6}
             md={4}
             lg={3}
             className="flex justify-center"
           >
-            <Book key={book.id} book={book} />
+            <Book book={book} />
           </Grid>
         ))}
     </Grid>

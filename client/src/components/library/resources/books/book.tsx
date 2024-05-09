@@ -55,7 +55,7 @@ function Book({ book, borrow }: { book: Book; borrow?: Borrow }) {
           <Typography
             color="text.secondary"
             component="a"
-            href={`/authors/${book.author}`}
+            href={`/books/?filter={"author":${book.author}}`}
           >
             {author && author.name}
           </Typography>
@@ -65,7 +65,7 @@ function Book({ book, borrow }: { book: Book; borrow?: Borrow }) {
         <Chip
           label={category && category?.name}
           component="a"
-          href={`/categories/${book.category}`}
+          href={`/books/?filter={"category":${book.category}}`}
           clickable
           variant="outlined"
           className="px-5"
@@ -74,7 +74,7 @@ function Book({ book, borrow }: { book: Book; borrow?: Borrow }) {
       <CardActions>
         {borrow ? (
           <Button
-            href={`/books/${book.id}/return`}
+            href={`/borrows/${borrow.id}/return`}
             size="small"
             color="primary"
           >

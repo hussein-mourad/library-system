@@ -16,9 +16,10 @@ function Library({ dataProvider, authProvider }) {
     >
       <Resource name="books" list={BookList}>
         <Route path=":id/borrow" element={<BorrowCreate />} />
+      </Resource>
+      <Resource name="borrows" list={BorrowList}>
         <Route path=":id/return" element={<BorrowReturn />} />
       </Resource>
-      <Resource name="borrows" list={BorrowList} />
       <Resource name="authors" recordRepresentation="name" />
       <Resource name="categories" recordRepresentation="name" />
     </Admin>
