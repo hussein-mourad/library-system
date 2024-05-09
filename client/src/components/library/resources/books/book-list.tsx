@@ -25,7 +25,7 @@ export function BookListContent() {
 
 function BookList() {
   return (
-    <ListBase>
+    <ListBase filter={{ status: "available" }}>
       <Box className="my-5">
         <BookListContent />
         <Pagination />

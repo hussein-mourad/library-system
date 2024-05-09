@@ -14,16 +14,17 @@ import {
   TextField,
   TextInput,
   Toolbar,
-  useCreate,
+  useGetIdentity,
 } from "react-admin";
 import { useParams } from "react-router-dom";
 
 function BorrowCreate() {
   const { id: bookId } = useParams();
+  const { data: user, isLoading, error } = useGetIdentity();
 
   return (
     <Box className="mt-5">
-      <CreateBase resource="borrows">
+      <CreateBase resource="borrows" redirect="/">
         <ShowBase resource="books">
           <SimpleShowLayout>
             <Typography variant="h5">Borrow book</Typography>
@@ -38,15 +39,16 @@ function BorrowCreate() {
             </Toolbar>
           }
         >
-          {/* <TextInput source="book" defaultValue={bookId} hidden={true} /> */}
-          <ReferenceInput source="user">
-            {/* <TextInput source="book" defaultValue={bookId} hidden={true} /> */}
-          </ReferenceInput>
-          <ReferenceInput
+          <TextInput
+            source="user"
+            defaultValue={user?.id}
+            style={{ display: "none" }}
+          />
+
+          <TextInput
             source="book"
-            reference="books"
             defaultValue={bookId}
-            hidden={true}
+            style={{ display: "none" }}
           />
           <DateInput source="return_date" />
         </SimpleForm>

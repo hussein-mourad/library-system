@@ -67,7 +67,7 @@ export const BookList = () => {
             link="show"
           />
           <TextField source="isbn" />
-          <DateField source="year" />
+          <TextField source="year" />
           <TextField source="status" />
           <EditButton />
         </Datagrid>
@@ -88,7 +88,7 @@ export const BookShow = () => (
         <ReferenceField source="category" reference="categories" link="show" />
         <TextField source="isbn" />
         <TextField source="status" />
-        <DateField source="year" />
+        <TextField source="year" />
       </TabbedShowLayout.Tab>
       <TabbedShowLayout.Tab label="comments" path="comments">
         <ReferenceManyField reference="comments" target="book" label={false}>
@@ -132,7 +132,7 @@ export const BookEdit = () => {
             { id: "borrowed", name: "Borrowed" },
           ]}
         />
-        <DateInput className="sm:w-96" source="year" />
+        <TextInput className="sm:w-96" source="year" />
         <ReferenceInput className="sm:w-96" source="author" reference="authors">
           <SelectInput className="sm:w-96" source="author" />
         </ReferenceInput>
@@ -165,7 +165,7 @@ export const BookCreate = () => (
         <SelectInput className="sm:w-96" source="category" />
       </ReferenceInput>
       <TextInput className="sm:w-96" source="isbn" />
-      <DateInput className="sm:w-96" source="year" />
+      <TextInput className="sm:w-96" source="year" />
       <ImageInput className="sm:w-96" source="cover">
         <ImageField source="src" title="title" />
       </ImageInput>
