@@ -16,8 +16,8 @@ export interface Book {
   id: number;
   title: string;
   description: string;
-  publication_date: string;
-  cover_image: string;
+  year: number;
+  cover: string;
   author: number;
   category: number;
 }
@@ -35,7 +35,7 @@ function Book({ book }: { book: Book }) {
         component="img"
         className="max-h-[400px]"
         height="80"
-        image={book.cover_image || BookPlaceholder}
+        image={book.cover || BookPlaceholder}
         alt="book cover"
       />
       <CardContent className="flex-grow h-full">
@@ -51,9 +51,7 @@ function Book({ book }: { book: Book }) {
           >
             {author && author.name}
           </Typography>
-          <Typography color="text.secondary">
-            {book.publication_date?.substring(0, 4)}
-          </Typography>
+          <Typography color="text.secondary">{book.year}</Typography>
         </Box>
 
         <Chip
