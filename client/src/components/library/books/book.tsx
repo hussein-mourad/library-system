@@ -1,6 +1,5 @@
 import {
   Card,
-  CardActionArea,
   Button,
   CardActions,
   CardContent,
@@ -11,8 +10,7 @@ import {
 } from "@mui/material";
 
 import BookPlaceholder from "@/assets/book-cover-placeholder.png";
-import { useEffect } from "react";
-import { Link, useGetOne } from "react-admin";
+import { useGetOne } from "react-admin";
 
 export interface Book {
   id: number;
@@ -25,8 +23,8 @@ export interface Book {
 }
 
 function Book({ book }: { book: Book }) {
-  const { data: author } = useGetOne('authors', { id: book.author });
-  const { data: category } = useGetOne('categories', { id: book.category });
+  const { data: author } = useGetOne("authors", { id: book.author });
+  const { data: category } = useGetOne("categories", { id: book.category });
 
   if (!book) return null;
 
@@ -38,7 +36,7 @@ function Book({ book }: { book: Book }) {
         className="max-h-[400px]"
         height="80"
         image={book.cover_image || BookPlaceholder}
-        alt="green iguana"
+        alt="book cover"
       />
       <CardContent className="flex-grow h-full">
         <Typography gutterBottom variant="h5" component="div">
@@ -46,7 +44,11 @@ function Book({ book }: { book: Book }) {
         </Typography>
 
         <Box className="flex justify-between mb-2">
-          <Typography color="text.secondary" component="a" href={`/authors/${book.author}`}>
+          <Typography
+            color="text.secondary"
+            component="a"
+            href={`/authors/${book.author}`}
+          >
             {author && author.name}
           </Typography>
           <Typography color="text.secondary">
@@ -54,15 +56,21 @@ function Book({ book }: { book: Book }) {
           </Typography>
         </Box>
 
-        <Chip label={category && category?.name} component="a" href={`/categories/${book.category}`} clickable variant="outlined" className="px-5" />
+        <Chip
+          label={category && category?.name}
+          component="a"
+          href={`/categories/${book.category}`}
+          clickable
+          variant="outlined"
+          className="px-5"
+        />
       </CardContent>
-      {/* </CardActionArea> */}
-      <CardActions >
-        <Button href={`/books/${book.id}/borrow`} size="small" color="primary" >
+      <CardActions>
+        <Button href={`/books/${book.id}/borrow`} size="small" color="primary">
           Borrow
         </Button>
       </CardActions>
-    </Card >
+    </Card>
   );
 }
 

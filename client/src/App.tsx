@@ -1,5 +1,5 @@
 import AdminPanel from "@/components/admin";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HelloWorld from "./HelloWorld";
 
 function App() {
@@ -9,8 +9,8 @@ function App() {
         <Route path="/" element={<HelloWorld />} />
         <Route path="/admin/*" element={<AdminPanel />} />
       </Routes>
-    </BrowserRouter >
-  )
+    </BrowserRouter>
+  );
 }
 
 export default App;

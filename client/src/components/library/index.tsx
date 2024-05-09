@@ -1,15 +1,10 @@
-import {
-  Admin,
-  Resource,
-} from "react-admin";
+import { Admin, Resource } from "react-admin";
 import Layout from "./layout";
 import { Route } from "react-router-dom";
 import BookList from "./books/book-list";
 
 function BookItem() {
-  return (
-    <h1>Book item</h1>
-  );
+  return <h1>Book item</h1>;
 }
 
 function Library({ dataProvider, authProvider }) {
@@ -28,4 +23,3 @@ function Library({ dataProvider, authProvider }) {
 }
 
 export default Library;
-

@@ -6,23 +6,31 @@ export function BookListContent() {
   const { data: books } = useListContext();
   return (
     <Grid container spacing={3}>
-      {books && books.map((book) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} className="flex justify-center">
-          <Book key={book.id} book={book} />
-        </Grid>
-      ))}
+      {books &&
+        books.map((book) => (
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+            className="flex justify-center"
+          >
+            <Book key={book.id} book={book} />
+          </Grid>
+        ))}
     </Grid>
-  )
+  );
 }
 
 function BookList() {
   return (
     <ListBase>
       <Box className="my-5">
-        < BookListContent />
+        <BookListContent />
         <Pagination />
       </Box>
-    </ListBase >
+    </ListBase>
   );
 }
 

@@ -38,7 +38,8 @@ function jwtTokenAuthProvider(options: Options = {}) {
       return Promise.resolve();
     },
 
-    checkAuth: () => { // not secure we need to query the server instead
+    checkAuth: () => {
+      // not secure we need to query the server instead
       return localStorage.getItem("access")
         ? Promise.resolve()
         : Promise.reject();
@@ -60,12 +61,15 @@ function jwtTokenAuthProvider(options: Options = {}) {
 
     getIdentity: async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/current-user/`, {
-          headers: new Headers({
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("access")}`,
-          }),
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/current-user/`,
+          {
+            headers: new Headers({
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("access")}`,
+            }),
+          },
+        );
         const { user, profile } = await response.json();
         const { id, first_name, last_name } = user;
         const avatar = `${import.meta.env.VITE_API_URL}/${profile.avatar}`;
@@ -75,7 +79,6 @@ function jwtTokenAuthProvider(options: Options = {}) {
         return Promise.reject(error);
       }
     },
-
   };
 }
 

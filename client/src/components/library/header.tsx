@@ -31,7 +31,6 @@ function Header() {
       <AppBar position="static" color="primary">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-
             <Box className="hidden md:flex items-center space-x-2 mr-3">
               <ImportContactsIcon />
               <Typography
@@ -120,11 +119,10 @@ function Header() {
 
             <ToggleThemeButton />
             <UserMenu />
-
           </Toolbar>
         </Container>
       </AppBar>
-    </Box >
+    </Box>
   );
 }
 export default Header;

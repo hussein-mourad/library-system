@@ -112,12 +112,15 @@ const resources = [
   },
 ];
 
-
 const PageAppBar = () => (
-  <AppBar toolbar={<>
-    <LoadingIndicator />
-    <ToggleThemeButton />
-  </>} />
+  <AppBar
+    toolbar={
+      <>
+        <LoadingIndicator />
+        <ToggleThemeButton />
+      </>
+    }
+  />
 );
 
 const PageLayout = (props) => (
