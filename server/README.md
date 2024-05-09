@@ -101,9 +101,28 @@ python manage.py runserver
 http://localhost:8000/api/
 ```
 
-
 > Open the admin dashboard in the browser
 
 ```bash
 http://localhost:8000/admin/
+```
+
+### Generate testing data
+
+Drop the database
+
+```bash
+python manage.py flush
+```
+
+Generate random users
+
+```bash
+python manage.py populate_users
+```
+
+Generate random library data
+
+```bash
+python manage.py populate_library
 ```
