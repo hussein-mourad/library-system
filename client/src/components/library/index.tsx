@@ -16,7 +16,7 @@ function Library({ dataProvider, authProvider }) {
       darkTheme={{ palette: { mode: "dark" } }}
     >
       <Resource name="books" list={BookList}>
-        <Route path="/books/:id" element={<BookItem />} />
+        <Route path=":id/borrow" element={<BookItem />} />
       </Resource>
     </Admin>
   );

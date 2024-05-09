@@ -12,7 +12,12 @@ import MenuItem from "@mui/material/MenuItem";
 import { ToggleThemeButton, UserMenu } from "react-admin";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 
-const pages = ["Books"];
+const pages = [
+  {
+    name: "Books",
+    path: "/books",
+  },
+];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -37,7 +42,7 @@ function Header() {
                 variant="h5"
                 noWrap
                 component="a"
-                href="#app-bar-with-responsive-menu"
+                href="/"
                 sx={{
                   fontWeight: 500,
                   letterSpacing: ".1rem",
@@ -79,8 +84,10 @@ function Header() {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center" component="a" href="/">
+                      {page.name}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -92,7 +99,7 @@ function Header() {
                 variant="h5"
                 noWrap
                 component="a"
-                href="#app-bar-with-responsive-menu"
+                href="/"
                 sx={{
                   fontWeight: 500,
                   letterSpacing: ".1rem",
@@ -107,12 +114,13 @@ function Header() {
             <Box className="hidden md:flex flex-grow items-center">
               {pages.map((page) => (
                 <Button
-                  key={page}
+                  key={page.name}
                   onClick={handleCloseNavMenu}
                   variant="text"
+                  href={page.path}
                   sx={{ color: "white", display: "block" }}
                 >
-                  {page}
+                  {page.name}
                 </Button>
               ))}
             </Box>
