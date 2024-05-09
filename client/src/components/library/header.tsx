@@ -17,6 +17,10 @@ const pages = [
     name: "Books",
     path: "/books",
   },
+  {
+    name: "Borrowed",
+    path: "/borrows",
+  },
 ];
 
 function Header() {

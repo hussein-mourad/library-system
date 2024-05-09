@@ -22,7 +22,15 @@ export interface Book {
   category: number;
 }
 
-function Book({ book }: { book: Book }) {
+export interface Borrow {
+  id: number;
+  book: number;
+  user: number;
+  borrow_date: Date;
+  return: false;
+}
+
+function Book({ book, borrow }: { book: Book; borrow?: Borrow }) {
   const { data: author } = useGetOne("authors", { id: book.author });
   const { data: category } = useGetOne("categories", { id: book.category });
 
@@ -64,9 +72,23 @@ function Book({ book }: { book: Book }) {
         />
       </CardContent>
       <CardActions>
-        <Button href={`/books/${book.id}/borrow`} size="small" color="primary">
-          Borrow
-        </Button>
+        {borrow ? (
+          <Button
+            href={`/books/${book.id}/borrow`}
+            size="small"
+            color="primary"
+          >
+            Borrow
+          </Button>
+        ) : (
+          <Button
+            href={`/books/${book.id}/return`}
+            size="small"
+            color="primary"
+          >
+            Return
+          </Button>
+        )}
       </CardActions>
     </Card>
   );

@@ -1,41 +1,48 @@
-// import { Box, Grid } from "@mui/material";
-// import { ListBase, Pagination, useListContext } from "react-admin";
-// import Book from "./book";
-//
-// export function BookListContent() {
-//   const { data: books } = useListContext();
-//   return (
-//     <Grid container spacing={3}>
-//       {books &&
-//         books.map((book) => (
-//           <Grid
-//             item
-//             xs={12}
-//             sm={6}
-//             md={4}
-//             lg={3}
-//             className="flex justify-center"
-//           >
-//             <Book key={book.id} book={book} />
-//           </Grid>
-//         ))}
-//     </Grid>
-//   );
-// }
-//
-// function BookList() {
-//   return (
-//     <ListBase filter={{ status: "available" }}>
-//       <Box className="my-5">
-//         <BookListContent />
-//         <Pagination />
-//       </Box>
-//     </ListBase>
-//   );
-// }
-//
-// export default BookList;
-//
-//
+import { Box, Grid } from "@mui/material";
+import {
+  ListBase,
+  Pagination,
+  useListContext,
+  useGetIdentity,
+  useGetOne,
+} from "react-admin";
+import Book from "../books/book";
 
-// Borrow list of the curreent logged in user
+export function BorrowedBook({ borrow }) {
+  const { data: book } = useGetOne("books", { id: borrow?.book });
+  return book && <Book book={book} borrow={borrow} />;
+}
+
+export function BorrowListContent() {
+  const { data: borrows } = useListContext();
+  return (
+    <Grid container spacing={3}>
+      {borrows &&
+        borrows.map((borrow) => (
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+            className="flex justify-center"
+          >
+            <BorrowedBook key={borrow.id} borrow={borrow} />
+          </Grid>
+        ))}
+    </Grid>
+  );
+}
+function BorrowList() {
+  const { data: user } = useGetIdentity();
+  return (
+    <ListBase filter={{ user: user?.id, status: "available" }}>
+      <Box className="my-5">
+        <BorrowListContent />
+        <Pagination />
+      </Box>
+    </ListBase>
+  );
+}
+
+export default BorrowList;
