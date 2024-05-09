@@ -74,19 +74,19 @@ function Book({ book, borrow }: { book: Book; borrow?: Borrow }) {
       <CardActions>
         {borrow ? (
           <Button
-            href={`/books/${book.id}/borrow`}
-            size="small"
-            color="primary"
-          >
-            Borrow
-          </Button>
-        ) : (
-          <Button
             href={`/books/${book.id}/return`}
             size="small"
             color="primary"
           >
             Return
+          </Button>
+        ) : (
+          <Button
+            href={`/books/${book.id}/borrow`}
+            size="small"
+            color="primary"
+          >
+            Borrow
           </Button>
         )}
       </CardActions>
