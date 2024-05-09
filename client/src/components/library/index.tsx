@@ -1,8 +1,8 @@
 import { Admin, Resource } from "react-admin";
 import Layout from "./layout";
-import { Route, useParams } from "react-router-dom";
-import BookList from "./resources/books/book-list";
+import { Route } from "react-router-dom";
 import BorrowCreate from "./resources/borrows/borrow-create";
+import BookList from "./resources//books/book-list";
 
 function Library({ dataProvider, authProvider }) {
   return (
@@ -15,6 +15,8 @@ function Library({ dataProvider, authProvider }) {
       <Resource name="books" list={BookList}>
         <Route path=":id/borrow" element={<BorrowCreate />} />
       </Resource>
+      <Resource name="authors" recordRepresentation="name" />
+      <Resource name="categories" recordRepresentation="name" />
     </Admin>
   );
 }
