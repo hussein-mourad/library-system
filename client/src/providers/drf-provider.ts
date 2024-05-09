@@ -5,6 +5,7 @@ const createFormData = (params, image_key: string) => {
   const formData = new FormData();
   for (const key in params.data) {
     const value = params.data[key] || "";
+    console.log(key, key === image_key, value, value.rawFile);
     if (key === image_key) {
       // Handle file uploads
       if (value && value.rawFile) formData.append(key, value.rawFile);
@@ -101,7 +102,7 @@ export default (
 
     update: async (resource, params) => {
       let body: any = JSON.stringify(params.data);
-      if (resource === "profile") {
+      if (resource === "profiles") {
         body = createFormData(params, "avatar");
       } else if (resource === "books") {
         body = createFormData(params, "cover");
@@ -115,7 +116,7 @@ export default (
 
     updateMany: (resource, params) => {
       let body: any = JSON.stringify(params.data);
-      if (resource === "profile") {
+      if (resource === "profiles") {
         body = createFormData(params, "avatar");
       } else if (resource === "books") {
         body = createFormData(params, "cover");
@@ -132,7 +133,7 @@ export default (
 
     create: async (resource, params) => {
       let body: any = JSON.stringify(params.data);
-      if (resource === "profile") {
+      if (resource === "profiles") {
         body = createFormData(params, "avatar");
       } else if (resource === "books") {
         body = createFormData(params, "cover");
