@@ -1,11 +1,10 @@
-import { Box, CircularProgress, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import {
   ListBase,
   Pagination,
   useListContext,
   useGetIdentity,
   useGetOne,
-  LoadingPage,
 } from "react-admin";
 import Book from "../books/book";
 import LoadingScreen from "@/components/common/loading-screen";
