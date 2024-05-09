@@ -34,7 +34,7 @@ class Book(models.Model):
         ("available", "Available"),
         ("borrowed", "Borrowed"),
     ]
-    IMAGE_FIELD = "cover_image"
+    IMAGE_FIELD = "cover"
 
     class Meta:
         ordering = ["id"]
@@ -43,7 +43,7 @@ class Book(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
     isbn = models.CharField(max_length=30, unique=True)
-    cover_image = models.ImageField(
+    cover = models.ImageField(
         upload_to=generate_filename,
         blank=True,
         null=True,

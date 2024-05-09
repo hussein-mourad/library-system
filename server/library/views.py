@@ -35,8 +35,8 @@ class BookViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     #     """Ensure the old image file is deleted when a new image is uploaded."""
     #     instance = serializer.instance
     #     old_instance = Book.objects.get(pk=instance.pk)
-    #     old_image = old_instance.cover_image
-    #     new_image = serializer.validated_data.get("cover_image", None)
+    #     old_image = old_instance.cover
+    #     new_image = serializer.validated_data.get("cover", None)
     #     # Call the parent perform_update method to save the update
     #     super().perform_update(serializer)
     #     # Compare old and new images
