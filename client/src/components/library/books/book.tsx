@@ -1,12 +1,13 @@
 import {
   Card,
   CardActionArea,
+  Button,
   CardActions,
   CardContent,
   CardMedia,
-  Button,
   Typography,
   Box,
+  Chip,
 } from "@mui/material";
 
 import BookPlaceholder from "@/assets/book-cover-placeholder.png";
@@ -45,25 +46,19 @@ function Book({ book }: { book: Book }) {
         </Typography>
 
         <Box className="flex justify-between mb-2">
-          <Link to={`/authors/${book.author}`}>
-            <Typography color="text.secondary">
-              {author && author.name}
-            </Typography>
-          </Link>
+          <Typography color="text.secondary" component="a" href={`/authors/${book.author}`}>
+            {author && author.name}
+          </Typography>
           <Typography color="text.secondary">
             {book.publication_date?.substring(0, 4)}
           </Typography>
         </Box>
 
-        <Link to={`/categories/${book.category}`}>
-          <Typography color="text.secondary">
-            {category && category?.name}
-          </Typography>
-        </Link>
+        <Chip label={category && category?.name} component="a" href={`/categories/${book.category}`} clickable variant="outlined" className="px-5" />
       </CardContent>
       {/* </CardActionArea> */}
       <CardActions >
-        <Button size="small" color="primary">
+        <Button href={`/books/${book.id}/borrow`} size="small" color="primary" >
           Borrow
         </Button>
       </CardActions>
