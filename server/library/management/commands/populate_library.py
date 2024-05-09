@@ -52,7 +52,7 @@ class Command(BaseCommand):
                 author=author,
                 description=fake.paragraph(),
                 isbn=fake.isbn13(),
-                publication_date=fake.date_this_decade(),
+                year=fake.year(),
                 category=category,
             )
 

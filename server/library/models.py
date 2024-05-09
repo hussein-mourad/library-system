@@ -48,7 +48,7 @@ class Book(models.Model):
         blank=True,
         null=True,
     )
-    publication_date = models.DateField(blank=True, null=True)
+    year = models.PositiveSmallIntegerField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     status = models.CharField(
         max_length=10, choices=STATUS_CHOICES, default="available"
