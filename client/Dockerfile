@@ -15,4 +15,6 @@ COPY . .
 
 EXPOSE 5173
 
+ENV VITE_API_URL=http://localhost:8000
+
 CMD ["npx", "vite", "--host"]
