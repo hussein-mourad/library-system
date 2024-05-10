@@ -1,13 +1,19 @@
 # Library Management System (lms)
 
-## Quick start
+## Quick start with docker
+
+Clone this repository:
+
+```bash
+git clone https://github.com/sp24sw/sp24sw-final-project-g3
+```
 
 ```bash
 docker build -t lms-client .
 ```
 
 ```bash
-docker run --name lms-client -p 5173:5173 lms-client 
+docker run --name lms-client -p 5173:5173 -env 'VITE_API_URL=http://localhost:8000' lms-client
 ```
 
 ## Installation
@@ -32,6 +38,14 @@ cd client
 npm install
 ```
 
+5. Set the environment variables
+
+```bash
+cp .env.example .env.local
+```
+
+6. Change the values in `.env.local` if needed
+
 ## Usage
 
 To start the development server, run:
@@ -45,7 +59,6 @@ npm run dev
 ```bash
 npm run build
 ```
-
 
 ### React + TypeScript + Vite
 
