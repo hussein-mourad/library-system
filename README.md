@@ -19,4 +19,4 @@ Make sure you have [Docker](https://docs.docker.com/get-docker/) with compose ex
 docker-compose up
 ```
 
-This will take some few minutes
+
