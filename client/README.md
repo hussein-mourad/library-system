@@ -1,4 +1,53 @@
-# React + TypeScript + Vite
+# Library Management System (lms)
+
+## Quick start
+
+```bash
+docker build -t lms-client .
+```
+
+```bash
+docker run --name lms-client -p 5173:5173 lms-client 
+```
+
+## Installation
+
+1. Make sure you have [Node.js](https://nodejs.org/) installed.
+
+2. Clone this repository:
+
+```bash
+git clone https://github.com/sp24sw/sp24sw-final-project-g3
+```
+
+3. Navigate into the project directory:
+
+```bash
+cd client
+```
+
+4. Install dependencies:
+
+```bash
+npm install
+```
+
+## Usage
+
+To start the development server, run:
+
+```bash
+npm run dev
+```
+
+## Production
+
+```bash
+npm run build
+```
+
+
+### React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
