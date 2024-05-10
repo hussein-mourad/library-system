@@ -9,7 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import { ToggleThemeButton, UserMenu } from "react-admin";
+import { ToggleThemeButton, UserMenu, useGetIdentity } from "react-admin";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 
 const pages = [
@@ -24,6 +24,9 @@ const pages = [
 ];
 
 function Header() {
+  const { data: user } = useGetIdentity();
+  const isAdmin = user?.role !== "member";
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null,
   );
@@ -87,9 +90,20 @@ function Header() {
                   display: { xs: "block", md: "none" },
                 }}
               >
+                {isAdmin && (
+                  <MenuItem key={"dashboard"} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center" component="a" href="/admin">
+                      Dashboard
+                    </Typography>
+                  </MenuItem>
+                )}
                 {pages.map((page) => (
                   <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center" component="a" href="/">
+                    <Typography
+                      textAlign="center"
+                      component="a"
+                      href={page.path}
+                    >
                       {page.name}
                     </Typography>
                   </MenuItem>
@@ -116,10 +130,18 @@ function Header() {
             </Box>
 
             <Box className="hidden md:flex flex-grow items-center">
+              {isAdmin && (
+                <Button
+                  variant="text"
+                  href="/admin"
+                  sx={{ color: "white", display: "block" }}
+                >
+                  Dashboard
+                </Button>
+              )}
               {pages.map((page) => (
                 <Button
                   key={page.name}
-                  onClick={handleCloseNavMenu}
                   variant="text"
                   href={page.path}
                   sx={{ color: "white", display: "block" }}

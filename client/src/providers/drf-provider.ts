@@ -141,7 +141,6 @@ export default (
       const { json } = await httpClient(`${apiUrl}/${resource}/`, {
         method: "POST",
         body,
-        // body: JSON.stringify(params.data),
       });
       return {
         data: { ...json },

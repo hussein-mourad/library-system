@@ -71,10 +71,10 @@ function jwtTokenAuthProvider(options: Options = {}) {
           },
         );
         const { user, profile } = await response.json();
-        const { id, first_name, last_name } = user;
+        const { id, first_name, last_name, role } = user;
         const avatar = `${import.meta.env.VITE_API_URL}/${profile.avatar}`;
         const fullName = `${first_name} ${last_name}`;
-        return Promise.resolve({ id, fullName, avatar });
+        return Promise.resolve({ id, fullName, avatar, role });
       } catch (error) {
         return Promise.reject(error);
       }
