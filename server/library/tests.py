@@ -90,7 +90,7 @@ class BookViewSetTestCase(TestCase):
             "author": author.id,
             "category": category.id,
             "isbn": "1234567890123",
-            "publication_date": "2021-01-01",
+            "year": "2021",
         }
         response = self.client.post(reverse("book-list"), data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

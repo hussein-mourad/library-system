@@ -54,13 +54,29 @@ Setup virtual environment
 python -m venv venv
 ```
 
+Activate the environment
+
+On unix-based systems
+
+```bash
+source venv/bin/activate
+```
+
+On Windows
+
+> Make sure you are allowed to execute scripts on windows
+
+```cmd
+.\venv\Scripts\activate
+```
+
 Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Make database
+Create the database
 
 ```bash
 python manage.py makemigrations
@@ -79,16 +95,34 @@ Start the server
 python manage.py runserver
 ```
 
-Open the api dashboard in web browser
+> Open the api dashboard in the browser
 
 ```bash
 http://localhost:8000/api/
 ```
 
-Or
-
-Open the admin dashboard in web browser
+> Open the admin dashboard in the browser
 
 ```bash
 http://localhost:8000/admin/
+```
+
+### Generate testing data
+
+Drop the database
+
+```bash
+python manage.py flush
+```
+
+Generate random users
+
+```bash
+python manage.py populate_users
+```
+
+Generate random library data
+
+```bash
+python manage.py populate_library
 ```

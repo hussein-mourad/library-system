@@ -9,6 +9,19 @@ from library.models import Author, Book, Borrow, Category, Comment
 fake = Faker()
 User = get_user_model()
 
+categories = [
+    "Sport",
+    "Fiction",
+    "Science",
+    "Biography",
+    "History",
+    "Cooking",
+    "Travel",
+    "Art",
+    "Music",
+    "Health",
+]
+
 
 class Command(BaseCommand):
     help = (
@@ -38,7 +51,7 @@ class Command(BaseCommand):
 
         # Populate categories
         for _ in range(5):
-            Category.objects.create(name=fake.word())
+            Category.objects.create(name=random.choice(categories))
 
     def populate_books(self):
         authors = Author.objects.all()
@@ -52,7 +65,7 @@ class Command(BaseCommand):
                 author=author,
                 description=fake.paragraph(),
                 isbn=fake.isbn13(),
-                publication_date=fake.date_this_decade(),
+                year=fake.year(),
                 category=category,
             )
 

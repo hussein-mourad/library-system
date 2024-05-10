@@ -20,6 +20,9 @@ class User(AbstractUser):
         ordering = ["id"]
 
     def save(self, *args, **kwargs):
+        if self.role == "admin":
+            self.is_superuser = True
+            self.is_staff = True
         if self.is_superuser or self.is_staff:
             self.role = "admin"
         super().save(*args, **kwargs)

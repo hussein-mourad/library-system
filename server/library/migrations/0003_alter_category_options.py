@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('library', '0002_alter_book_cover_image'),
+        ("library", "0002_alter_book_cover_image"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='category',
-            options={'verbose_name': 'category', 'verbose_name_plural': 'categories'},
+            name="category",
+            options={"verbose_name": "category", "verbose_name_plural": "categories"},
         ),
     ]

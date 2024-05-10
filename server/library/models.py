@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.timezone import timezone
@@ -34,7 +36,10 @@ class Book(models.Model):
         ("available", "Available"),
         ("borrowed", "Borrowed"),
     ]
-    IMAGE_FIELD = "cover_image"
+    IMAGE_FIELD = "cover"
+
+    class Meta:
+        ordering = ["id"]
 
     class Meta:
         ordering = ["id"]
@@ -43,12 +48,12 @@ class Book(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
     isbn = models.CharField(max_length=30, unique=True)
-    cover_image = models.ImageField(
+    cover = models.ImageField(
         upload_to=generate_filename,
         blank=True,
         null=True,
     )
-    publication_date = models.DateField(blank=True, null=True)
+    year = models.PositiveSmallIntegerField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     status = models.CharField(
         max_length=10, choices=STATUS_CHOICES, default="available"
@@ -61,7 +66,7 @@ class Book(models.Model):
 class Borrow(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    borrow_date = models.DateTimeField(auto_now_add=True)
+    borrow_date = models.DateTimeField(null=False, blank=False, default=datetime.now)
     return_date = models.DateTimeField(null=True, blank=True)
     returned = models.BooleanField(default=False)
 

@@ -28,15 +28,15 @@ class BookViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     ordering_fields = "__all__"
-    filterset_fields = ["title", "author", "category"]
-    search_fields = ["$title", "author__name", "category__name", "description"]
+    filterset_fields = ["title", "author", "category", "status", "year"]
+    search_fields = ["$title", "author__name", "category__name", "description", "year"]
 
     # def perform_update(self, serializer):
     #     """Ensure the old image file is deleted when a new image is uploaded."""
     #     instance = serializer.instance
     #     old_instance = Book.objects.get(pk=instance.pk)
-    #     old_image = old_instance.cover_image
-    #     new_image = serializer.validated_data.get("cover_image", None)
+    #     old_image = old_instance.cover
+    #     new_image = serializer.validated_data.get("cover", None)
     #     # Call the parent perform_update method to save the update
     #     super().perform_update(serializer)
     #     # Compare old and new images
@@ -49,8 +49,8 @@ class BookViewSet(BulkActionsMixin, viewsets.ModelViewSet):
 class BorrowViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     queryset = Borrow.objects.all()
     serializer_class = BorrowSerializer
-    filterset_fields = ["book", "user"]
-    ordering_fields = ["book", "user", "borrow_date", "return_date"]
+    filterset_fields = ["book", "user", "returned"]
+    ordering_fields = ["book", "user", "borrow_date", "return_date", "returned"]
     search_fields = ["$book__title", "user__username"]
 
     def perform_create(self, serializer):
