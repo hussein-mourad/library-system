@@ -49,8 +49,8 @@ class BookViewSet(BulkActionsMixin, viewsets.ModelViewSet):
 class BorrowViewSet(BulkActionsMixin, viewsets.ModelViewSet):
     queryset = Borrow.objects.all()
     serializer_class = BorrowSerializer
-    filterset_fields = ["book", "user"]
-    ordering_fields = ["book", "user", "borrow_date", "return_date"]
+    filterset_fields = ["book", "user", "returned"]
+    ordering_fields = ["book", "user", "borrow_date", "return_date", "returned"]
     search_fields = ["$book__title", "user__username"]
 
     def perform_create(self, serializer):
