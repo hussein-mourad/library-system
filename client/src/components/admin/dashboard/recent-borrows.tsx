@@ -33,19 +33,25 @@ function RecentBorrows() {
           sort={{ field: "borrow_date", order: "ASC" }}
         >
           {isSmall ? (
-            <WithListContext
-              render={({ data }) => (
-                <SimpleList
-                  data={data}
-                  primaryText={(data) => data.book.title}
-                  secondaryText={(data) =>
-                    new Date(data.borrow_date).toLocaleString()
-                  }
-                  tertiaryText={(data) =>
-                    new Date(data.return_date).toLocaleString()
-                  }
-                />
-              )}
+            <SimpleList
+              primaryText={
+                <ReferenceField source="book" reference="books" link="show">
+                  <TextField source="title" />
+                </ReferenceField>
+              }
+              secondaryText={(data) =>
+                `Due ${new Date(data.return_date).toDateString()}`
+              }
+              tertiaryText={
+                <ReferenceField
+                  className="float-end"
+                  source="user"
+                  reference="users"
+                  link="show"
+                >
+                  <TextField source="username" />
+                </ReferenceField>
+              }
             />
           ) : (
             <Datagrid rowClick="show">
