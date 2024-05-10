@@ -1,34 +1,10 @@
-import {
-  Admin,
-  CustomRoutes,
-  AppBar,
-  ToggleThemeButton,
-} from "react-admin";
+import { Admin, Resource } from "react-admin";
 import Layout from "./layout";
 import { Route } from "react-router-dom";
-
-const Hello = () => {
-  return <h1>Hello</h1>;
-};
-
-const PageAppBar = () => (
-  <AppBar
-    toolbar={
-      <>
-        <ToggleThemeButton />
-      </>
-    }
-  ></AppBar>
-);
-const PageLayout = (props) => (
-  <Layout {...props} appBar={PageAppBar}>
-    {props.children}
-  </Layout>
-);
-
-function BookList() {
-  return <div>BookList</div>;
-}
+import BorrowCreate from "./resources/borrows/borrow-create";
+import BookList from "./resources//books/book-list";
+import BorrowList from "./resources/borrows/borrow-list";
+import BorrowReturn from "./resources/borrows/borrow-return";
 
 function Library({ dataProvider, authProvider }) {
   return (
@@ -38,9 +14,14 @@ function Library({ dataProvider, authProvider }) {
       layout={Layout}
       darkTheme={{ palette: { mode: "dark" } }}
     >
-      <CustomRoutes>
-        <Route path="/" element={<BookList />} />
-      </CustomRoutes>
+      <Resource name="books" list={BookList}>
+        <Route path=":id/borrow" element={<BorrowCreate />} />
+      </Resource>
+      <Resource name="borrows" list={BorrowList}>
+        <Route path=":id/return" element={<BorrowReturn />} />
+      </Resource>
+      <Resource name="authors" recordRepresentation="name" />
+      <Resource name="categories" recordRepresentation="name" />
     </Admin>
   );
 }

@@ -1,26 +1,21 @@
 import { useMediaQuery, Theme } from "@mui/material";
 import {
-  BooleanField,
   Create,
   Datagrid,
   DateField,
-  DateInput,
+  NumberInput,
   Edit,
   EditButton,
   ImageField,
   ImageInput,
-  Labeled,
   List,
-  NumberField,
   ReferenceField,
   ReferenceInput,
   ReferenceManyField,
-  SelectField,
   SelectInput,
   Show,
   SimpleForm,
   SimpleList,
-  SimpleShowLayout,
   TabbedShowLayout,
   TextField,
   TextInput,
@@ -29,6 +24,13 @@ import {
 
 const booksFilters = [
   <TextInput source="search" label="Search" alwaysOn />,
+  <SelectInput
+    source="status"
+    choices={[
+      { id: "available", name: "Available" },
+      { id: "borrowed", name: "Borrowed" },
+    ]}
+  />,
   <ReferenceInput source="author" label="Author" reference="authors" />,
   <ReferenceInput source="category" label="Category" reference="categories" />,
 ];
@@ -52,7 +54,7 @@ export const BookList = () => {
         <Datagrid rowClick="show">
           <TextField source="id" />
           <ImageField
-            source="cover_image"
+            source="cover"
             sx={{
               "& img": { maxWidth: 50, maxHeight: 50, objectFit: "contain" },
             }}
@@ -65,7 +67,7 @@ export const BookList = () => {
             link="show"
           />
           <TextField source="isbn" />
-          <DateField source="publication_date" />
+          <TextField source="year" />
           <TextField source="status" />
           <EditButton />
         </Datagrid>
@@ -79,14 +81,14 @@ export const BookShow = () => (
     <TabbedShowLayout>
       <TabbedShowLayout.Tab label="data">
         <TextField source="id" />
-        <ImageField source="cover_image" />
+        <ImageField source="cover" />
         <TextField source="title" />
         <ReferenceField source="author" reference="authors" link="show" />
         <TextField source="description" />
         <ReferenceField source="category" reference="categories" link="show" />
         <TextField source="isbn" />
         <TextField source="status" />
-        <DateField source="publication_date" />
+        <TextField source="year" />
       </TabbedShowLayout.Tab>
       <TabbedShowLayout.Tab label="comments" path="comments">
         <ReferenceManyField reference="comments" target="book" label={false}>
@@ -110,8 +112,8 @@ export const BookEdit = () => {
           source="id"
           InputProps={{ disabled: true }}
         />
-        <ImageField source="cover_image" />
-        <ImageInput className="sm:w-96" source="cover_image" accept="image/*">
+        <ImageField source="cover" />
+        <ImageInput className="sm:w-96" source="cover" accept="image/*">
           <ImageField source="src" title="title" />
         </ImageInput>
         <TextInput className="sm:w-96" source="title" />
@@ -130,7 +132,12 @@ export const BookEdit = () => {
             { id: "borrowed", name: "Borrowed" },
           ]}
         />
-        <DateInput className="sm:w-96" source="publication_date" />
+        <NumberInput
+          className="sm:w-96"
+          source="year"
+          min={1800}
+          max={new Date().getFullYear()}
+        />
         <ReferenceInput className="sm:w-96" source="author" reference="authors">
           <SelectInput className="sm:w-96" source="author" />
         </ReferenceInput>
@@ -163,8 +170,13 @@ export const BookCreate = () => (
         <SelectInput className="sm:w-96" source="category" />
       </ReferenceInput>
       <TextInput className="sm:w-96" source="isbn" />
-      <DateInput className="sm:w-96" source="publication_date" />
-      <ImageInput className="sm:w-96" source="cover_image">
+      <NumberInput
+        className="sm:w-96"
+        source="year"
+        min={1800}
+        max={new Date().getFullYear()}
+      />
+      <ImageInput className="sm:w-96" source="cover">
         <ImageField source="src" title="title" />
       </ImageInput>
     </SimpleForm>

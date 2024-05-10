@@ -29,44 +29,50 @@ function RecentBorrows() {
         </Typography>
         <ListBase
           resource="borrows"
-          page={null}
-          sort={{ field: "borrow_date", order: "DESC" }}
+          filter={{ returned: false, perPage: 5 }}
+          sort={{ field: "borrow_date", order: "ASC" }}
         >
           {isSmall ? (
-            <WithListContext
-              render={({ data }) => (
-                <SimpleList
-                  data={data}
-                  primaryText={(data) => data.book}
-                  secondaryText={(data) => data.borrow_date}
-                  tertiaryText={(data) => data.return_date}
-                />
-              )}
+            <SimpleList
+              primaryText={
+                <ReferenceField source="book" reference="books" link="show">
+                  <TextField source="title" />
+                </ReferenceField>
+              }
+              secondaryText={(data) =>
+                `Due ${new Date(data.return_date).toDateString()}`
+              }
+              tertiaryText={
+                <ReferenceField
+                  className="float-end"
+                  source="user"
+                  reference="users"
+                  link="show"
+                >
+                  <TextField source="username" />
+                </ReferenceField>
+              }
             />
           ) : (
-            <WithListContext
-              render={({ data }) => (
-                <Datagrid data={data} rowClick="show">
-                  <TextField source="id" />
-                  <ReferenceField
-                    source="user"
-                    reference="users"
-                    link="show"
-                    sortable={false}
-                  />
-                  <ReferenceField
-                    source="book"
-                    reference="books"
-                    link="show"
-                    sortable={false}
-                  />
-                  <DateField source="borrow_date" />
-                  <DateField source="return_date" sortable={false} />
-                  <BooleanField source="returned" sortable={false} />
-                  <EditButton />
-                </Datagrid>
-              )}
-            />
+            <Datagrid rowClick="show">
+              <TextField source="id" />
+              <ReferenceField
+                source="user"
+                reference="users"
+                link="show"
+                sortable={false}
+              />
+              <ReferenceField
+                source="book"
+                reference="books"
+                link="show"
+                sortable={false}
+              />
+              <DateField source="borrow_date" />
+              <DateField source="return_date" sortable={false} />
+              <BooleanField source="returned" sortable={false} />
+              <EditButton />
+            </Datagrid>
           )}
         </ListBase>
       </CardContent>

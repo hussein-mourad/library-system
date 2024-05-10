@@ -1,4 +1,6 @@
 import { fetchUtils } from "react-admin";
+import { imageUrlToDataUri } from "@/lib/utils";
+import { API_URL } from "@/config";
 
 export interface Options {
   obtainAuthTokenUrl?: string;
@@ -39,6 +41,7 @@ function jwtTokenAuthProvider(options: Options = {}) {
     },
 
     checkAuth: () => {
+      // not secure we need to query the server instead
       return localStorage.getItem("access")
         ? Promise.resolve()
         : Promise.reject();
@@ -56,6 +59,24 @@ function jwtTokenAuthProvider(options: Options = {}) {
 
     getPermissions: () => {
       return Promise.resolve();
+    },
+
+    getIdentity: async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/current-user/`, {
+          headers: new Headers({
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("access")}`,
+          }),
+        });
+        const { user, profile } = await response.json();
+        const { id, first_name, last_name, role } = user;
+        const avatar = await imageUrlToDataUri(`${API_URL}/${profile.avatar}`);
+        const fullName = `${first_name} ${last_name}`;
+        return Promise.resolve({ id, fullName, avatar, role });
+      } catch (error) {
+        return Promise.reject(error);
+      }
     },
   };
 }

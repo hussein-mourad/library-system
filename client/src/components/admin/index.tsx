@@ -47,7 +47,7 @@ import {
 } from "./resources/comments";
 import { Dashboard } from "./dashboard";
 import LoginPage from "./login";
-import { ReactQueryDevtools } from "react-query/devtools";
+import Header from "./header";
 
 const resources = [
   {
@@ -112,19 +112,20 @@ const resources = [
   },
 ];
 
-const PageToolBar = () => (
-  <>
-    <LoadingIndicator />
-    <ToggleThemeButton />
-  </>
+const PageAppBar = () => (
+  <AppBar
+    toolbar={
+      <>
+        <LoadingIndicator />
+        <ToggleThemeButton />
+      </>
+    }
+  />
 );
-
-const PageAppBar = () => <AppBar toolbar={<PageToolBar />} />;
 
 const PageLayout = (props) => (
   <>
     <Layout {...props} appBar={PageAppBar} />
-    {/* <ReactQueryDevtools initialIsOpen={false} /> */}
   </>
 );
 

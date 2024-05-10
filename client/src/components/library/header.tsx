@@ -9,12 +9,24 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import { ToggleThemeButton, UserMenu } from "react-admin";
+import { ToggleThemeButton, UserMenu, useGetIdentity } from "react-admin";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 
-const pages = ["Books"];
+const pages = [
+  {
+    name: "Books",
+    path: "/books",
+  },
+  {
+    name: "Borrowed",
+    path: "/borrows",
+  },
+];
 
 function Header() {
+  const { data: user } = useGetIdentity();
+  const isAdmin = user?.role !== "member";
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null,
   );
@@ -31,14 +43,13 @@ function Header() {
       <AppBar position="static" color="primary">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-
             <Box className="hidden md:flex items-center space-x-2 mr-3">
               <ImportContactsIcon />
               <Typography
                 variant="h5"
                 noWrap
                 component="a"
-                href="#app-bar-with-responsive-menu"
+                href="/"
                 sx={{
                   fontWeight: 500,
                   letterSpacing: ".1rem",
@@ -50,7 +61,7 @@ function Header() {
               </Typography>
             </Box>
 
-            <Box className="flex-grow flex md:hidden">
+            <Box className="mr-6 md:hidden">
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -79,9 +90,22 @@ function Header() {
                   display: { xs: "block", md: "none" },
                 }}
               >
+                {isAdmin && (
+                  <MenuItem key={"dashboard"} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center" component="a" href="/admin">
+                      Dashboard
+                    </Typography>
+                  </MenuItem>
+                )}
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                    <Typography
+                      textAlign="center"
+                      component="a"
+                      href={page.path}
+                    >
+                      {page.name}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -93,7 +117,7 @@ function Header() {
                 variant="h5"
                 noWrap
                 component="a"
-                href="#app-bar-with-responsive-menu"
+                href="/"
                 sx={{
                   fontWeight: 500,
                   letterSpacing: ".1rem",
@@ -106,25 +130,33 @@ function Header() {
             </Box>
 
             <Box className="hidden md:flex flex-grow items-center">
-              {pages.map((page) => (
+              {isAdmin && (
                 <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
                   variant="text"
+                  href="/admin"
                   sx={{ color: "white", display: "block" }}
                 >
-                  {page}
+                  Dashboard
+                </Button>
+              )}
+              {pages.map((page) => (
+                <Button
+                  key={page.name}
+                  variant="text"
+                  href={page.path}
+                  sx={{ color: "white", display: "block" }}
+                >
+                  {page.name}
                 </Button>
               ))}
             </Box>
 
             <ToggleThemeButton />
             <UserMenu />
-
           </Toolbar>
         </Container>
       </AppBar>
-    </Box >
+    </Box>
   );
 }
 export default Header;

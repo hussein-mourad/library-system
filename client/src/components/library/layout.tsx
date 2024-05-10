@@ -1,10 +1,10 @@
-import { Suspense, HtmlHTMLAttributes } from 'react';
-import { CssBaseline, Container } from '@mui/material';
-import { CoreLayoutProps, CheckForApplicationUpdate } from 'react-admin';
-import { ErrorBoundary } from 'react-error-boundary';
+import { Suspense, HtmlHTMLAttributes } from "react";
+import { CssBaseline, Container } from "@mui/material";
+import { CoreLayoutProps, CheckForApplicationUpdate } from "react-admin";
+import { ErrorBoundary } from "react-error-boundary";
 
-import { Error, Loading } from 'react-admin';
-import Header from './header';
+import { Error, Loading } from "react-admin";
+import Header from "./header";
 
 const Layout = ({ children }: LayoutProps) => (
   <>
@@ -24,6 +24,6 @@ const Layout = ({ children }: LayoutProps) => (
 
 export interface LayoutProps
   extends CoreLayoutProps,
-  Omit<HtmlHTMLAttributes<HTMLDivElement>, 'title'> { }
+    Omit<HtmlHTMLAttributes<HTMLDivElement>, "title"> {}
 
 export default Layout;

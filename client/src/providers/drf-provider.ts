@@ -1,19 +1,22 @@
 import { stringify } from "query-string";
 import { Identifier, fetchUtils, DataProvider } from "react-admin";
 
-const createFormData = (params) => {
+const createFormData = (params, image_key: string) => {
   const formData = new FormData();
   for (const key in params.data) {
     const value = params.data[key] || "";
-    if (value && value.rawFile) {
-      formData.append(key, value.rawFile);
+    console.log(key, key === image_key, value, value.rawFile);
+    if (key === image_key) {
+      // Handle file uploads
+      if (value && value.rawFile) formData.append(key, value.rawFile);
     } else if (typeof value === "object") {
       // Recursively check nested objects
-      const nestedFormData = createFormData({ data: value });
+      const nestedFormData = createFormData({ data: value }, image_key);
       for (const [nestedKey, nestedValue] of nestedFormData.entries()) {
         formData.append(`${key}.${nestedKey}`, nestedValue);
       }
     } else {
+      // Regular key-value pair
       formData.append(key, value);
     }
   }
@@ -98,30 +101,46 @@ export default (
     },
 
     update: async (resource, params) => {
+      let body: any = JSON.stringify(params.data);
+      if (resource === "profiles") {
+        body = createFormData(params, "avatar");
+      } else if (resource === "books") {
+        body = createFormData(params, "cover");
+      }
       const { json } = await httpClient(`${apiUrl}/${resource}/${params.id}/`, {
         method: "PATCH",
-        body: createFormData(params),
-        // body: JSON.stringify(params.data),
+        body,
       });
       return { data: json };
     },
 
-    updateMany: (resource, params) =>
-      Promise.all(
+    updateMany: (resource, params) => {
+      let body: any = JSON.stringify(params.data);
+      if (resource === "profiles") {
+        body = createFormData(params, "avatar");
+      } else if (resource === "books") {
+        body = createFormData(params, "cover");
+      }
+      return Promise.all(
         params.ids.map((id) =>
           httpClient(`${apiUrl}/${resource}/${id}/`, {
             method: "PATCH",
-            body: createFormData(params),
-            // body: JSON.stringify(params.data),
+            body,
           }),
         ),
-      ).then((responses) => ({ data: responses.map(({ json }) => json.id) })),
+      ).then((responses) => ({ data: responses.map(({ json }) => json.id) }));
+    },
 
     create: async (resource, params) => {
+      let body: any = JSON.stringify(params.data);
+      if (resource === "profiles") {
+        body = createFormData(params, "avatar");
+      } else if (resource === "books") {
+        body = createFormData(params, "cover");
+      }
       const { json } = await httpClient(`${apiUrl}/${resource}/`, {
         method: "POST",
-        body: createFormData(params),
-        // body: JSON.stringify(params.data),
+        body,
       });
       return {
         data: { ...json },

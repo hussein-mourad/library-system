@@ -47,9 +47,9 @@ export const Dashboard = () => {
           <StatCard key={index} resource={resource} />
         ))}
       </div>
-      {/* <div className="my-5"> */}
-      {/*   <RecentBorrows /> */}
-      {/* </div> */}
+      <div className="my-5">
+        <RecentBorrows />
+      </div>
     </div>
   );
 };
