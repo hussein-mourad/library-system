@@ -1,7 +1,7 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useDataProvider, useUpdate } from "react-admin";
+import { useUpdate } from "react-admin";
 import { useParams } from "react-router-dom";
 
 function BorrowReturn() {

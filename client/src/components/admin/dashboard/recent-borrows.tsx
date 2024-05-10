@@ -14,7 +14,6 @@ import {
   ReferenceField,
   SimpleList,
   TextField,
-  WithListContext,
 } from "react-admin";
 
 function RecentBorrows() {

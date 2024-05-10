@@ -2,9 +2,9 @@ import { Button, Card, CardContent, Typography } from "@mui/material";
 import { Link, useGetList } from "react-admin";
 import RecentBorrows from "./recent-borrows";
 
-const StatCard = ({ resource }) => {
+const StatCard = ({ resource }: { resource: string }) => {
   const { data } = useGetList(resource);
-  const capitalizeFirstLetter = (str) => {
+  const capitalizeFirstLetter = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
   return (

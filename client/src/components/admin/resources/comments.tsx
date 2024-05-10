@@ -3,16 +3,11 @@ import {
   Create,
   Datagrid,
   DateField,
-  DateInput,
   Edit,
   EditButton,
-  ImageField,
-  ImageInput,
-  Labeled,
   List,
   ReferenceField,
   ReferenceInput,
-  SelectField,
   SelectInput,
   Show,
   SimpleForm,
@@ -20,7 +15,6 @@ import {
   SimpleShowLayout,
   TextField,
   TextInput,
-  useRecordContext,
 } from "react-admin";
 
 const commentsFilters = [

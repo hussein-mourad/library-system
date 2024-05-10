@@ -5,18 +5,10 @@ import {
   Create,
   Datagrid,
   DateField,
-  DateInput,
   Edit,
-  EditButton,
   EmailField,
-  ImageField,
-  ImageInput,
-  Labeled,
   List,
   PasswordInput,
-  ReferenceField,
-  ReferenceInput,
-  SelectField,
   SelectInput,
   Show,
   SimpleForm,
@@ -75,8 +67,8 @@ export const UserShow = () => (
   </Show>
 );
 
-export const UserEdit = (props) => {
-  const transform = (data) => {
+export const UserEdit = (props: any) => {
+  const transform = (data: any) => {
     // Filter out the unchanged email field
     // console.log("transform", data, props.record.email)
     console.log(data, props);
@@ -88,6 +80,7 @@ export const UserEdit = (props) => {
     console.log("transform", data);
     return data;
   };
+
   return (
     <Edit title={<UserTitle />} {...props} transform={transform}>
       <SimpleForm>

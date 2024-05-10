@@ -1,7 +1,14 @@
 import { stringify } from "query-string";
-import { Identifier, fetchUtils, DataProvider } from "react-admin";
+import {
+  Identifier,
+  fetchUtils,
+  DataProvider,
+  PaginationProps,
+  FilterProps,
+  SortPayload,
+} from "react-admin";
 
-const createFormData = (params, image_key: string) => {
+const createFormData = (params: any, image_key: string) => {
   const formData = new FormData();
   for (const key in params.data) {
     const value = params.data[key] || "";
@@ -23,14 +30,14 @@ const createFormData = (params, image_key: string) => {
   return formData;
 };
 
-const getPaginationQuery = (pagination) => {
+const getPaginationQuery = (pagination: PaginationProps) => {
   return {
     page: pagination.page,
     perPage: pagination.perPage,
   };
 };
 
-const getFilterQuery = (filter) => {
+const getFilterQuery = (filter: any) => {
   const { search, ...otherSearchParams } = filter;
   return {
     ...otherSearchParams,
@@ -38,7 +45,7 @@ const getFilterQuery = (filter) => {
   };
 };
 
-export const getOrderingQuery = (sort) => {
+export const getOrderingQuery = (sort: SortPayload) => {
   const { field, order } = sort;
   return {
     ordering: `${order === "ASC" ? "" : "-"}${field}`,

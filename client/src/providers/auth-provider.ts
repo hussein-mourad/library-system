@@ -4,15 +4,17 @@ import { API_URL } from "@/config";
 
 export interface Options {
   obtainAuthTokenUrl?: string;
+  refreshTokenUrl?: string;
 }
 
 function jwtTokenAuthProvider(options: Options = {}) {
   const opts = {
     obtainAuthTokenUrl: `${import.meta.env.VITE_API_URL}/token/`,
+    refreshTokenUrl: `${import.meta.env.VITE_API_URL}/token/refresh`,
     ...options,
   };
   return {
-    login: async ({ username, password }) => {
+    login: async ({ username, password }: any) => {
       const request = new Request(opts.obtainAuthTokenUrl, {
         method: "POST",
         body: JSON.stringify({ username, password }),
@@ -47,7 +49,7 @@ function jwtTokenAuthProvider(options: Options = {}) {
         : Promise.reject();
     },
 
-    checkError: (error) => {
+    checkError: (error: any) => {
       const status = error.status;
       if (status === 401 || status === 403) {
         localStorage.removeItem("access");

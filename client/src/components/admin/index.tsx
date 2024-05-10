@@ -1,6 +1,8 @@
 import {
   Admin,
   AppBar,
+  AuthProvider,
+  DataProvider,
   Layout,
   LoadingIndicator,
   Resource,
@@ -47,7 +49,6 @@ import {
 } from "./resources/comments";
 import { Dashboard } from "./dashboard";
 import LoginPage from "./login";
-import Header from "./header";
 
 const resources = [
   {
@@ -123,13 +124,19 @@ const PageAppBar = () => (
   />
 );
 
-const PageLayout = (props) => (
+const PageLayout = (props: any) => (
   <>
     <Layout {...props} appBar={PageAppBar} />
   </>
 );
 
-function AdminPanel({ dataProvider, authProvider }) {
+function AdminPanel({
+  dataProvider,
+  authProvider,
+}: {
+  dataProvider: DataProvider;
+  authProvider: AuthProvider;
+}) {
   return (
     <Admin
       layout={PageLayout}

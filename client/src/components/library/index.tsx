@@ -1,4 +1,4 @@
-import { Admin, Resource } from "react-admin";
+import { Admin, AuthProvider, DataProvider, Resource } from "react-admin";
 import Layout from "./layout";
 import { Route } from "react-router-dom";
 import BorrowCreate from "./resources/borrows/borrow-create";
@@ -6,7 +6,13 @@ import BookList from "./resources//books/book-list";
 import BorrowList from "./resources/borrows/borrow-list";
 import BorrowReturn from "./resources/borrows/borrow-return";
 
-function Library({ dataProvider, authProvider }) {
+function Library({
+  dataProvider,
+  authProvider,
+}: {
+  dataProvider: DataProvider;
+  authProvider: AuthProvider;
+}) {
   return (
     <Admin
       dataProvider={dataProvider}

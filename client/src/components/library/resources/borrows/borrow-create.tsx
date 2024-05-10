@@ -1,13 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import {
-  Button,
   CreateBase,
-  CreateButton,
   DateInput,
   ImageField,
-  ReferenceInput,
   SaveButton,
-  Show,
   ShowBase,
   SimpleForm,
   SimpleShowLayout,
@@ -20,7 +16,7 @@ import { useParams } from "react-router-dom";
 
 function BorrowCreate() {
   const { id: bookId } = useParams();
-  const { data: user, isLoading, error } = useGetIdentity();
+  const { data: user } = useGetIdentity();
 
   return (
     <Box className="mt-5">
@@ -35,7 +31,7 @@ function BorrowCreate() {
         <SimpleForm
           toolbar={
             <Toolbar>
-              <SaveButton label="Borrow" icon={false} />
+              <SaveButton label="Borrow" icon={<></>} />
             </Toolbar>
           }
         >

@@ -9,7 +9,7 @@ import {
 import Book from "../books/book";
 import LoadingScreen from "@/components/common/loading-screen";
 
-export function BorrowedBook({ borrow }) {
+export function BorrowedBook({ borrow }: { borrow: any }) {
   const { data: book } = useGetOne("books", { id: borrow?.book });
   return book && <Book book={book} borrow={borrow} />;
 }
