@@ -41,6 +41,9 @@ class Book(models.Model):
     class Meta:
         ordering = ["id"]
 
+    class Meta:
+        ordering = ["id"]
+
     title = models.CharField(max_length=255)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
