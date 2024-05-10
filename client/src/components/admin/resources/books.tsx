@@ -3,7 +3,7 @@ import {
   Create,
   Datagrid,
   DateField,
-  DateInput,
+  NumberInput,
   Edit,
   EditButton,
   ImageField,
@@ -132,7 +132,12 @@ export const BookEdit = () => {
             { id: "borrowed", name: "Borrowed" },
           ]}
         />
-        <TextInput className="sm:w-96" source="year" />
+        <NumberInput
+          className="sm:w-96"
+          source="year"
+          min={1800}
+          max={new Date().getFullYear()}
+        />
         <ReferenceInput className="sm:w-96" source="author" reference="authors">
           <SelectInput className="sm:w-96" source="author" />
         </ReferenceInput>
@@ -165,7 +170,12 @@ export const BookCreate = () => (
         <SelectInput className="sm:w-96" source="category" />
       </ReferenceInput>
       <TextInput className="sm:w-96" source="isbn" />
-      <TextInput className="sm:w-96" source="year" />
+      <NumberInput
+        className="sm:w-96"
+        source="year"
+        min={1800}
+        max={new Date().getFullYear()}
+      />
       <ImageInput className="sm:w-96" source="cover">
         <ImageField source="src" title="title" />
       </ImageInput>
