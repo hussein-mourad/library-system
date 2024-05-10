@@ -29,8 +29,8 @@ function RecentBorrows() {
         </Typography>
         <ListBase
           resource="borrows"
-          page={null}
-          sort={{ field: "borrow_date", order: "DESC" }}
+          filter={{ returned: false, perPage: 5 }}
+          sort={{ field: "borrow_date", order: "ASC" }}
         >
           {isSmall ? (
             <WithListContext
