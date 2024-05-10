@@ -37,36 +37,36 @@ function RecentBorrows() {
               render={({ data }) => (
                 <SimpleList
                   data={data}
-                  primaryText={(data) => data.book}
-                  secondaryText={(data) => data.borrow_date}
-                  tertiaryText={(data) => data.return_date}
+                  primaryText={(data) => data.book.title}
+                  secondaryText={(data) =>
+                    new Date(data.borrow_date).toLocaleString()
+                  }
+                  tertiaryText={(data) =>
+                    new Date(data.return_date).toLocaleString()
+                  }
                 />
               )}
             />
           ) : (
-            <WithListContext
-              render={({ data }) => (
-                <Datagrid data={data} rowClick="show">
-                  <TextField source="id" />
-                  <ReferenceField
-                    source="user"
-                    reference="users"
-                    link="show"
-                    sortable={false}
-                  />
-                  <ReferenceField
-                    source="book"
-                    reference="books"
-                    link="show"
-                    sortable={false}
-                  />
-                  <DateField source="borrow_date" />
-                  <DateField source="return_date" sortable={false} />
-                  <BooleanField source="returned" sortable={false} />
-                  <EditButton />
-                </Datagrid>
-              )}
-            />
+            <Datagrid rowClick="show">
+              <TextField source="id" />
+              <ReferenceField
+                source="user"
+                reference="users"
+                link="show"
+                sortable={false}
+              />
+              <ReferenceField
+                source="book"
+                reference="books"
+                link="show"
+                sortable={false}
+              />
+              <DateField source="borrow_date" />
+              <DateField source="return_date" sortable={false} />
+              <BooleanField source="returned" sortable={false} />
+              <EditButton />
+            </Datagrid>
           )}
         </ListBase>
       </CardContent>

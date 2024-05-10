@@ -8,8 +8,9 @@ import jwtTokenAuthProvider, {
 } from "@/providers/auth-provider";
 import Library from "@/components/library";
 import drfProvider from "./providers/drf-provider";
+import { API_URL } from "@/config";
 
-const apiUrl = import.meta.env.VITE_API_URL as string;
+const apiUrl = `${API_URL}/api`;
 const authProvider = jwtTokenAuthProvider({
   obtainAuthTokenUrl: `${apiUrl}/token/`,
   refreshTokenUrl: `${apiUrl}/token/refresh/`,
