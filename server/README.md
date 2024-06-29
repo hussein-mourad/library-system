@@ -19,7 +19,7 @@ cd library-system/server
 Build the image
 
 ```bash
-docker build -t lms-server
+docker build -t lms-server .
 ```
 
 Run the image
